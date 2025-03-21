@@ -1,0 +1,67 @@
+services:
+  web.api:
+    container_name: web_api
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: src/WebApi/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Senha@123
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - ASPNETCORE_HTTPS_PORTS=443
+    ports:
+      - "5000:80"
+      - "5001:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${USERPROFILE}\.aspnet\https:/https:ro
+    depends_on:
+      keycloak:
+        condition: service_started
+    networks:
+      - keycloak-net
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "https://localhost:5001/health" ]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
+    command: sh -c "sleep 10 && dotnet ef database update && dotnet WebApi.dll"
+    
+    
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    container_name: keycloak
+    environment:
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 7080
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: "true"
+      KC_LOG_LEVEL: info
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:7080/health/ready" ]
+      interval: 15s
+      timeout: 2s
+      retries: 15
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+    command: [ "start-dev", "--http-port", "7080", "--https-port", "7443" ]
+    ports:
+      - "7080:7080"
+      - "7443:7443"
+    networks:
+      - keycloak-net
+
+networks:
+  keycloak-net:
+    driver: bridge
+      
+volumes:
+  keycloak_data:
+    driver: local

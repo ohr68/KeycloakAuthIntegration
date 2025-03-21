@@ -1,0 +1,1 @@
+C:\Users\Otavio\RiderProjects\KeycloakAuthIntegration\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
