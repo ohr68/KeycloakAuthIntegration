@@ -2,6 +2,8 @@ using KeycloakAuthIntegration.IoC;
 using KeycloakAuthIntegration.IoC.HealthChecks;
 using KeycloakAuthIntegration.IoC.Logging;
 using KeycloakAuthIntegration.ORM.Context;
+using KeycloakAuthIntegration.WebApi.Constants;
+using KeycloakAuthIntegration.WebApi.Filters;
 using Serilog;
 using WebApi.Extensions;
 
@@ -24,32 +26,36 @@ public class Program
                         $"{ctx.HttpContext.Request.Method} {ctx.HttpContext.Request.Path}");
                 });
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options => { options.Filters.Add<GlobalExceptionFilter>(); });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.AddBasicHealthChecks();
             builder.Services.ConfigureServices(builder.Configuration, builder.Environment.IsDevelopment());
-            builder.Services.ConfigureKeycloak(builder.Configuration);
+            builder.Services.AddPresentationLayer(builder.Configuration);
 
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth Web API V1");
+                });
             }
 
             app.UseHttpsRedirection();
             app.UseBasicHealthChecks();
+            app.UseCors(Configuration.AllowProductManagementClient);
             app.MapControllers().RequireAuthorization();
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             // When the app runs, it first creates the Database.
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
             context.Database.EnsureCreated();
-            
+
             app.Run();
         }
         catch (Exception ex)
