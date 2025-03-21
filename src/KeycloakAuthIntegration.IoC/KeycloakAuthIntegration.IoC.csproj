@@ -16,4 +16,9 @@
       <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\KeycloakAuthIntegration.Application\KeycloakAuthIntegration.Application.csproj" />
+      <ProjectReference Include="..\KeycloakAuthIntegration.ORM\KeycloakAuthIntegration.ORM.csproj" />
+    </ItemGroup>
+
 </Project>

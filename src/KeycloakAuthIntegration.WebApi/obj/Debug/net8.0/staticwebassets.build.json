@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "lAVsf4/XP8OL4a3UKcpKodesbBfBaGYqErDYy8hI7Xs=",
-  "Source": "WebApi",
-  "BasePath": "_content/WebApi",
+  "Hash": "2LksMCd4VTiQmd29atPukbxgL0QDUJqmC0CGe69+5ug=",
+  "Source": "KeycloakAuthIntegration.WebApi",
+  "BasePath": "_content/KeycloakAuthIntegration.WebApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

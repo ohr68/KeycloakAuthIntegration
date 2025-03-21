@@ -1,3 +1,4 @@
+using KeycloakAuthIntegration.IoC;
 using KeycloakAuthIntegration.IoC.HealthChecks;
 using KeycloakAuthIntegration.IoC.Logging;
 using Serilog;
@@ -21,11 +22,12 @@ public class Program
                     ctx.ProblemDetails.Extensions.Add("instance",
                         $"{ctx.HttpContext.Request.Method} {ctx.HttpContext.Request.Path}");
                 });
-            
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.AddBasicHealthChecks();
+            builder.Services.ConfigureServices(builder.Configuration, builder.Environment.IsDevelopment());
             builder.Services.ConfigureKeycloak(builder.Configuration);
 
             var app = builder.Build();
