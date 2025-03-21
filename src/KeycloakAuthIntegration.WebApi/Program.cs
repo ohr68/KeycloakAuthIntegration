@@ -1,6 +1,7 @@
 using KeycloakAuthIntegration.IoC;
 using KeycloakAuthIntegration.IoC.HealthChecks;
 using KeycloakAuthIntegration.IoC.Logging;
+using KeycloakAuthIntegration.ORM.Context;
 using Serilog;
 using WebApi.Extensions;
 
@@ -43,7 +44,12 @@ public class Program
             app.MapControllers().RequireAuthorization();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
+            // When the app runs, it first creates the Database.
+            using var scope = app.Services.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+            context.Database.EnsureCreated();
+            
             app.Run();
         }
         catch (Exception ex)

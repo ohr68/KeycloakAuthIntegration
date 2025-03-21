@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using KeycloakAuthIntegration.Application.CustomValidators;
+using KeycloakAuthIntegration.Domain.Interfaces;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +21,7 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationLayer).Assembly));
+        services.AddScoped<IPasswordHasher, CustomPasswordHasher>();
         
         return services;
     }

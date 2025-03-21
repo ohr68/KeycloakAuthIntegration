@@ -1028,6 +1028,16 @@
             "rid": "win"
           }
         }
+      },
+      "KeycloakAuthIntegration.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/KeycloakAuthIntegration.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/KeycloakAuthIntegration.Domain.dll": {}
+        }
       }
     }
   },
@@ -2833,10 +2843,16 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "KeycloakAuthIntegration.Domain/1.0.0": {
+      "type": "project",
+      "path": "../KeycloakAuthIntegration.Domain/KeycloakAuthIntegration.Domain.csproj",
+      "msbuildProject": "../KeycloakAuthIntegration.Domain/KeycloakAuthIntegration.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "KeycloakAuthIntegration.Domain >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 9.0.0",
       "Microsoft.EntityFrameworkCore.InMemory >= 9.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.0",
@@ -2871,7 +2887,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\KeycloakAuthIntegration.Domain.csproj": {
+              "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\KeycloakAuthIntegration.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
