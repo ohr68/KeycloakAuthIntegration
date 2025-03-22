@@ -4,7 +4,7 @@ services:
     image: ${DOCKER_REGISTRY-}webapi
     build:
       context: .
-      dockerfile: src/WebApi/Dockerfile
+      dockerfile: src/KeycloakAuthIntegration.WebApi/Dockerfile
     environment:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx

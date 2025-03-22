@@ -32,6 +32,12 @@
             "projectReferences": {
               "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\KeycloakAuthIntegration.Domain.csproj": {
                 "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\KeycloakAuthIntegration.Domain.csproj"
+              },
+              "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.ORM\\KeycloakAuthIntegration.ORM.csproj": {
+                "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.ORM\\KeycloakAuthIntegration.ORM.csproj"
+              },
+              "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakIntegration.Common\\KeycloakIntegration.Common.csproj": {
+                "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakIntegration.Common\\KeycloakIntegration.Common.csproj"
               }
             }
           }
