@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\KeycloakAuthIntegration.Application\KeycloakAuthIntegration.Application.csproj" />
+      <ProjectReference Include="..\KeycloakAuthIntegration.Keycloak\KeycloakAuthIntegration.Keycloak.csproj" />
       <ProjectReference Include="..\KeycloakAuthIntegration.ORM\KeycloakAuthIntegration.ORM.csproj" />
     </ItemGroup>
 

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "p6U4XV/htXo=",
+  "dgSpecHash": "daOJaWjXUa0=",
   "success": true,
   "projectFilePath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.WebApi\\KeycloakAuthIntegration.WebApi.csproj",
   "expectedPackageFiles": [
@@ -61,6 +61,8 @@
     "C:\\Users\\Otavio\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
     "C:\\Users\\Otavio\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\Otavio\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\Otavio\\.nuget\\packages\\refit\\8.0.0\\refit.8.0.0.nupkg.sha512",
+    "C:\\Users\\Otavio\\.nuget\\packages\\refit.httpclientfactory\\8.0.0\\refit.httpclientfactory.8.0.0.nupkg.sha512",
     "C:\\Users\\Otavio\\.nuget\\packages\\serilog\\4.2.0\\serilog.4.2.0.nupkg.sha512",
     "C:\\Users\\Otavio\\.nuget\\packages\\serilog.aspnetcore\\9.0.0\\serilog.aspnetcore.9.0.0.nupkg.sha512",
     "C:\\Users\\Otavio\\.nuget\\packages\\serilog.enrichers.environment\\3.0.1\\serilog.enrichers.environment.3.0.1.nupkg.sha512",
