@@ -51,6 +51,7 @@ public class Program
             app.MapControllers().RequireAuthorization();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseDefaultLogging();
 
             // When the app runs, it first creates the Database.
             using var scope = app.Services.CreateScope();

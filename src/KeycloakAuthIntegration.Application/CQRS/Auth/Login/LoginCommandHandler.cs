@@ -3,8 +3,10 @@ using KeycloakAuthIntegration.Keycloak.Constants;
 using KeycloakAuthIntegration.Keycloak.Interfaces.Services;
 using KeycloakAuthIntegration.Keycloak.Models.Requests;
 using KeycloakAuthIntegration.ORM.Context;
+using KeycloakIntegration.Common.Exceptions;
 using Mapster;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace KeycloakAuthIntegration.Application.CQRS.Auth.Login;
 
@@ -21,10 +23,10 @@ public class LoginCommandHandler(
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        // var user = await context.Users.FirstOrDefaultAsync(u => u.Username == request.Username, cancellationToken);
-        //
-        // if (user is null)
-        //     throw new NotFoundException($"Usuário {request.Username} não encontrado.");
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Username == request.Username, cancellationToken);
+        
+        if (user is null)
+            throw new NotFoundException($"Usuário {request.Username} não encontrado.");
 
         var (grantType, clientId, clientSecret) = authRequestHandler.GetAuthRequestData(GrantType.Password);
         request.SetAuthData(grantType, clientId, clientSecret);
