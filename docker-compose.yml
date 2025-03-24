@@ -22,6 +22,8 @@ services:
     depends_on:
       keycloak:
         condition: service_started
+      auth.database:
+        condition: service_started
     networks:
       - keycloak-net
     healthcheck:
@@ -32,7 +34,23 @@ services:
       timeout: 5s
     command: sh -c "sleep 10 && dotnet ef database update && dotnet WebApi.dll"
     
-    
+  auth.database:
+    container_name: auth_database
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    networks:
+      - keycloak-net
+    volumes:
+      - authdatabase-data:/var/opt/mssql
+    healthcheck:
+      test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1" ]
+      interval: 10s
+      retries: 5
+  
   keycloak:
     image: quay.io/keycloak/keycloak:24.0
     container_name: keycloak
@@ -64,4 +82,4 @@ networks:
       
 volumes:
   keycloak_data:
-    driver: local
+  authdatabase-data:

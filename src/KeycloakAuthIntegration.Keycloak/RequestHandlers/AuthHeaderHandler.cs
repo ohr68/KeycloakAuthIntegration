@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace KeycloakAuthIntegration.Keycloak.MessageHandlers;
+namespace KeycloakAuthIntegration.Keycloak.RequestHandlers;
 
 public class AuthHeaderHandler(IHttpContextAccessor contextAccessor) : DelegatingHandler
 {

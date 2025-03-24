@@ -25,7 +25,8 @@ public class Program
                     ctx.ProblemDetails.Extensions.Add("instance",
                         $"{ctx.HttpContext.Request.Method} {ctx.HttpContext.Request.Path}");
                 });
-
+            
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddControllers(options => { options.Filters.Add<GlobalExceptionFilter>(); });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

@@ -19,4 +19,8 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\KeycloakIntegration.Common\KeycloakIntegration.Common.csproj" />
+    </ItemGroup>
+
 </Project>

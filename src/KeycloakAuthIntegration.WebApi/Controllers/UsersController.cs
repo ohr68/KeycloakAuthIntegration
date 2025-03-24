@@ -1,6 +1,7 @@
 ﻿using KeycloakAuthIntegration.Application.CQRS.Users.CreateUser;
 using KeycloakAuthIntegration.WebApi.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KeycloakAuthIntegration.WebApi.Controllers;

@@ -13,7 +13,6 @@
         "packagesPath": "C:\\Users\\Otavio\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Otavio\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -75,7 +74,6 @@
         "packagesPath": "C:\\Users\\Otavio\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.ORM\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Otavio\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

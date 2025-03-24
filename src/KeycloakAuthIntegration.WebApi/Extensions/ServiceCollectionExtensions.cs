@@ -68,7 +68,7 @@ public static class ServiceCollectionExtensions
         {
             options.AddPolicy(Configuration.AllowProductManagementClient, policy =>
             {
-                policy.WithOrigins(configuration.GetSection("AllowedClients:ProductManagement").Value!)
+                policy.WithOrigins(configuration.GetSection("AllowedClients:ClientApp").Value!)
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });

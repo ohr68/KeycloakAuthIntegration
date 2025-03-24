@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
 using KeycloakAuthIntegration.Keycloak.Interfaces;
-using KeycloakAuthIntegration.Keycloak.MessageHandlers;
+using KeycloakAuthIntegration.Keycloak.Interfaces.Services;
+using KeycloakAuthIntegration.Keycloak.RequestHandlers;
 using KeycloakAuthIntegration.Keycloak.Requests;
+using KeycloakAuthIntegration.Keycloak.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
@@ -13,15 +15,20 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection ConfigureKeycloakIntegration(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddClients(configuration);
+        services.AddTransient<CustomRequestHandler>();
+        services.AddTransient<AuthHeaderHandler>();
+
+        services
+            .AddClients(configuration)
+            .AddServices();
         
         return services;
     }
 
     private static IServiceCollection AddClients(this IServiceCollection services, IConfiguration configuration)
     {
-        var baseUrl = configuration.GetSection("KeycloakServer:Url").Value
-                      ?? throw new InvalidOperationException("Chave 'KeycloakServer:Url' não encontrada.");
+        var baseUrl = configuration.GetSection("Keycloak:auth-server-url").Value
+                      ?? throw new InvalidOperationException("Chave 'Keycloak:auth-server-url' não encontrada.");
 
         var baseInterface = typeof(IRequest);
 
@@ -34,13 +41,23 @@ public static class ServiceCollectionExtensions
         {
             var refitClient = services
                 .AddRefitClient(refitInterface)
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(baseUrl));
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(baseUrl))
+                .AddHttpMessageHandler<CustomRequestHandler>();
 
             _ = refitInterface.DeclaringType == typeof(IAuthRequests) 
                 ? refitClient 
                 : refitClient.AddHttpMessageHandler<AuthHeaderHandler>();
         }
 
+        return services;
+    }
+
+    private static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<IAuthRequestHandler, AuthRequestHandler>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IRealmHandler, RealmHandler>();
+        
         return services;
     }
 }

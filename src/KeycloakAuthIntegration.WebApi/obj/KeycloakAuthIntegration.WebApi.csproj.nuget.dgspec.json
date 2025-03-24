@@ -13,7 +13,6 @@
         "packagesPath": "C:\\Users\\Otavio\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Application\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Otavio\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -32,6 +31,9 @@
             "projectReferences": {
               "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\KeycloakAuthIntegration.Domain.csproj": {
                 "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\KeycloakAuthIntegration.Domain.csproj"
+              },
+              "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Keycloak\\KeycloakAuthIntegration.Keycloak.csproj": {
+                "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Keycloak\\KeycloakAuthIntegration.Keycloak.csproj"
               },
               "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.ORM\\KeycloakAuthIntegration.ORM.csproj": {
                 "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.ORM\\KeycloakAuthIntegration.ORM.csproj"
@@ -111,7 +113,6 @@
         "packagesPath": "C:\\Users\\Otavio\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Otavio\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -173,7 +174,6 @@
         "packagesPath": "C:\\Users\\Otavio\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.IoC\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Otavio\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -275,7 +275,6 @@
         "packagesPath": "C:\\Users\\Otavio\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Keycloak\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Otavio\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -291,7 +290,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakIntegration.Common\\KeycloakIntegration.Common.csproj": {
+                "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakIntegration.Common\\KeycloakIntegration.Common.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -355,7 +358,6 @@
         "packagesPath": "C:\\Users\\Otavio\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.ORM\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Otavio\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -439,7 +441,6 @@
         "packagesPath": "C:\\Users\\Otavio\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.WebApi\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Otavio\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -533,7 +534,6 @@
         "packagesPath": "C:\\Users\\Otavio\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakIntegration.Common\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\Otavio\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
