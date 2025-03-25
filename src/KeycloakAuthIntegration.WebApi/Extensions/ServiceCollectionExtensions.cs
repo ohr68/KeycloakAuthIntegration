@@ -43,7 +43,7 @@ public static class ServiceCollectionExtensions
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = $"{configuration["Keycloak:auth-server-url"]}/realms/{configuration["Keycloak:realm"]}",
+                    ValidIssuer = $"{configuration["Keycloak:issuer"]}/realms/{configuration["Keycloak:realm"]}",
 
                     ValidateAudience = true,
                     ValidAudience = "web-api",
@@ -54,7 +54,7 @@ public static class ServiceCollectionExtensions
                     IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
                     {
                         var client = new HttpClient();
-                        var keyUri = $"{parameters.ValidIssuer}/protocol/openid-connect/certs";
+                        var keyUri = $"{configuration["Keycloak:auth-server-url"]}/realms/{configuration["Keycloak:realm"]}/protocol/openid-connect/certs";
                         var response = client.GetAsync(keyUri).Result;
                         var keys = new JsonWebKeySet(response.Content.ReadAsStringAsync().Result);
 
@@ -62,19 +62,17 @@ public static class ServiceCollectionExtensions
                     }
                 };
 
-                options.RequireHttpsMetadata = false; // Only for develop
+                options.RequireHttpsMetadata = false; // Only in develop environment
                 options.SaveToken = true;
             });
-        
-        services.AddHttpClient();
         
         return services;
     }
 
     private static IServiceCollection ConfigureKeycloakAuthorization(this IServiceCollection services,
-        IConfiguration keycloakConfiguration)
+        IConfiguration configuration)
     {
-        services.AddKeycloakAuthorization(keycloakConfiguration);
+        services.AddKeycloakAuthorization(configuration);
         
         return services;
     }
