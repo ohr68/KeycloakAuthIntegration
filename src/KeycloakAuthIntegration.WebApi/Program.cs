@@ -2,6 +2,7 @@ using KeycloakAuthIntegration.IoC;
 using KeycloakAuthIntegration.IoC.HealthChecks;
 using KeycloakAuthIntegration.IoC.Logging;
 using KeycloakAuthIntegration.ORM.Context;
+using KeycloakAuthIntegration.ORM.Initializers;
 using KeycloakAuthIntegration.WebApi.Constants;
 using KeycloakAuthIntegration.WebApi.Filters;
 using Serilog;
@@ -57,6 +58,7 @@ public class Program
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
             context.Database.EnsureCreated();
+            DbInitializer.SeedDatabase(context);
 
             app.Run();
         }

@@ -12,6 +12,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=80
       - ASPNETCORE_HTTPS_PORTS=443
+      - ConnectionStrings__Auth=Server=auth_database;Database=AuthDb;User Id=sa;Password=Senha@123;Encrypt=True;TrustServerCertificate=True;
+      - Keycloak__auth-server-url=http://keycloak:7080
     ports:
       - "5000:80"
       - "5001:443"
@@ -51,11 +53,28 @@ services:
       interval: 10s
       retries: 5
   
+  user.management.rabbitmq:
+    image: masstransit/rabbitmq
+    container_name: user_management_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - keycloak-net
+  
   keycloak:
     image: quay.io/keycloak/keycloak:24.0
     container_name: keycloak
     environment:
-      KC_HOSTNAME: localhost
+      KC_HOSTNAME: keycloak
       KC_HOSTNAME_PORT: 7080
       KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
       KEYCLOAK_ADMIN: admin

@@ -6,7 +6,11 @@ public class AuthHeaderHandler(IHttpContextAccessor contextAccessor) : Delegatin
 {
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        var token = "teste";
+        var token = contextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
+        
+        if (!string.IsNullOrEmpty(token) && token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+            token = token.Substring("Bearer ".Length).Trim();
+        
         request.Headers.Add("Authorization", $"Bearer {token}");
         
         return base.SendAsync(request, cancellationToken);

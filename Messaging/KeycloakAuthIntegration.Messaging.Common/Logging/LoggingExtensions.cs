@@ -8,7 +8,6 @@ using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Exceptions.Core;
 using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
-using Serilog.Filters;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace KeycloakAuthIntegration.Messaging.Common.Logging;
