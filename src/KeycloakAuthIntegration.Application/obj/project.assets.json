@@ -1580,6 +1580,9 @@
       "KeycloakAuthIntegration.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "KeycloakAuthIntegration.Common.Messaging": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/KeycloakAuthIntegration.Domain.dll": {}
         },
@@ -1610,6 +1613,7 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "KeycloakAuthIntegration.Common.Messaging": "1.0.0",
+          "KeycloakAuthIntegration.Domain": "1.0.0",
           "MassTransit": "8.4.0",
           "MassTransit.RabbitMQ": "8.4.0",
           "Microsoft.Extensions.Configuration.Binder": "9.0.0",

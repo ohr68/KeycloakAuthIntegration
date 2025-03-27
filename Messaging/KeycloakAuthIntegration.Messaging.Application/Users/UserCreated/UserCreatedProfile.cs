@@ -1,4 +1,4 @@
-﻿using KeycloakAuthIntegration.Common.Messaging.Messaging.Users;
+﻿using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
 using KeycloakAuthIntegration.Keycloak.Constants;
 using KeycloakAuthIntegration.Keycloak.Models;
 using KeycloakAuthIntegration.Keycloak.Models.Dtos;
@@ -11,7 +11,7 @@ public class UserCreatedProfile : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<KeycloakIntegration.Common.Messaging.Users.UserCreated, UserCreatedCommand>();
+        config.NewConfig<Common.Messaging.Commands.Users.UserCreated, UserCreatedCommand>();
         config.NewConfig<UserCreatedCommand, UserSync>();
         config.NewConfig<UserCreatedCommand, CreateUserFlowDto>()
             .ConstructUsing(u => new CreateUserFlowDto(u.Id, new UserRepresentation

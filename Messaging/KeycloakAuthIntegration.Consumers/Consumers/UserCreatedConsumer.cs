@@ -1,8 +1,7 @@
 ﻿using System.Text.Json;
+using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
 using KeycloakAuthIntegration.Common.Messaging.Interfaces;
-using KeycloakAuthIntegration.Common.Messaging.Messaging.Users;
 using KeycloakAuthIntegration.Messaging.Application.Users.UserCreated;
-using KeycloakIntegration.Common.Messaging.Users;
 using Mapster;
 using MassTransit;
 using MediatR;

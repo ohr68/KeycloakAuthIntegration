@@ -1,6 +1,6 @@
 ﻿using KeycloakAuthIntegration.Common.Messaging.Enums;
 
-namespace KeycloakAuthIntegration.Common.Messaging.Messaging.Users;
+namespace KeycloakAuthIntegration.Common.Messaging.Commands.Users;
 
 public class UserSynchronized : Message
 {

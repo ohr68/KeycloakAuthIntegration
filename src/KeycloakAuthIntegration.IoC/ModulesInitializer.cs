@@ -1,4 +1,5 @@
 ﻿using KeycloakAuthIntegration.Application.Extensions;
+using KeycloakAuthIntegration.Caching.Extensions;
 using KeycloakAuthIntegration.Keycloak.Extensions;
 using KeycloakAuthIntegration.Messaging.Extensions;
 using KeycloakAuthIntegration.ORM.Extensions;
@@ -16,7 +17,8 @@ public static class ModulesInitializer
             .AddApplicationLayer()
             .AddPersistenceLayer(configuration, isDevelopment)
             .ConfigureKeycloakIntegration(configuration)
-            .AddMessaging(configuration);
+            .AddMessaging(configuration)
+            .AddCaching(configuration);
 
         return services;
     }

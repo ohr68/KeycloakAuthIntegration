@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using KeycloakAuthIntegration.Keycloak.Configuration;
 using KeycloakAuthIntegration.Keycloak.Interfaces;
 using KeycloakAuthIntegration.Keycloak.Interfaces.Services;
 using KeycloakAuthIntegration.Keycloak.RequestHandlers;
@@ -15,6 +16,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection ConfigureKeycloakIntegration(this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.Configure<KeycloakUserOptions>(configuration.GetSection("KeycloakUser"));
+
         services.AddTransient<CustomRequestHandler>();
         services.AddTransient<AuthHeaderHandler>();
 

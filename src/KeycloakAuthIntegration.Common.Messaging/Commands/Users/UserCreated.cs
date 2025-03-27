@@ -1,6 +1,4 @@
-﻿using KeycloakAuthIntegration.Common.Messaging.Messaging;
-
-namespace KeycloakIntegration.Common.Messaging.Users;
+﻿namespace KeycloakAuthIntegration.Common.Messaging.Commands.Users;
 
 public class UserCreated : Message
 {

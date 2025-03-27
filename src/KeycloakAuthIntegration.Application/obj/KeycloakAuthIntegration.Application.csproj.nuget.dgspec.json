@@ -205,7 +205,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Common.Messaging\\KeycloakAuthIntegration.Common.Messaging.csproj": {
+                "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Common.Messaging\\KeycloakAuthIntegration.Common.Messaging.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -356,6 +360,9 @@
             "projectReferences": {
               "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Common.Messaging\\KeycloakAuthIntegration.Common.Messaging.csproj": {
                 "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Common.Messaging\\KeycloakAuthIntegration.Common.Messaging.csproj"
+              },
+              "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\KeycloakAuthIntegration.Domain.csproj": {
+                "projectPath": "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.Domain\\KeycloakAuthIntegration.Domain.csproj"
               }
             }
           }

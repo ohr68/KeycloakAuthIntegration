@@ -1,5 +1,5 @@
-﻿using KeycloakAuthIntegration.Domain.Entities;
-using KeycloakIntegration.Common.Messaging.Users;
+﻿using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
+using KeycloakAuthIntegration.Domain.Entities;
 using Mapster;
 
 namespace KeycloakAuthIntegration.Application.CQRS.Users.CreateUser;

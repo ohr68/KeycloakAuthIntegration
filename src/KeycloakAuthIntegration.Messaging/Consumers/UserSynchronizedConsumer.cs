@@ -1,11 +1,11 @@
 ﻿using System.Text.Json;
-using KeycloakAuthIntegration.Common.Messaging.Messaging.Users;
-using KeycloakAuthIntegration.Messaging.Commands;
+using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
+using KeycloakAuthIntegration.Domain.Interfaces.Services;
 using MassTransit;
 
 namespace KeycloakAuthIntegration.Messaging.Consumers;
 
-public class UserSynchronizedConsumer : IConsumer<UserSynchronized>
+public class UserSynchronizedConsumer(IUserSyncService userSyncService) : IConsumer<UserSynchronized>
 {
     public async Task Consume(ConsumeContext<UserSynchronized> context)
     {
@@ -14,10 +14,8 @@ public class UserSynchronizedConsumer : IConsumer<UserSynchronized>
         var message = context.Message;
         Console.WriteLine(JsonSerializer.Serialize(message));
         
-        var userSynchronizedCommand = new UserSynchronizedCommand();
-        //
-        // var result = await mediator.Send(userCreatedCommand, context.CancellationToken);
+        var result = await userSyncService.SynchronizeUser(message, context.CancellationToken);
         
-        //Console.WriteLine(JsonSerializer.Serialize(result));
+        Console.WriteLine("User {0} {1}.", message.Id, result ? "synchronized successfully" : "failed to synchronize");
     }
 }
