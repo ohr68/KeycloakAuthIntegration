@@ -2,6 +2,7 @@
 using FluentValidation;
 using KeycloakAuthIntegration.Keycloak.Interfaces.Services;
 using KeycloakAuthIntegration.Keycloak.Models.Dtos;
+using KeycloakAuthIntegration.Keycloak.Saga.Interfaces.CreateUser;
 using KeycloakAuthIntegration.Messaging.Domain.Entities;
 using KeycloakAuthIntegration.Messaging.ORM.Context;
 using KeycloakIntegration.Common.Exceptions;
@@ -13,7 +14,7 @@ namespace KeycloakAuthIntegration.Messaging.Application.Users.UserCreated;
 
 public class UserCreatedCommandHandler(
     MessagingDbContext context,
-    IUserService userService,
+    ICreateUserHandler createUserHandler,
     IValidator<UserCreatedCommand> validator
 ) : IRequestHandler<UserCreatedCommand, UserCreatedResult>
 {
@@ -36,7 +37,7 @@ public class UserCreatedCommandHandler(
 
         Console.WriteLine(JsonSerializer.Serialize(userRepresentation));
 
-        await userService.CreateUserFlowAsync(userRepresentation, cancellationToken);
+        await createUserHandler.Handle(userRepresentation, cancellationToken);
 
         userSync.Synchronized();
         context.Entry(userSync).State = EntityState.Modified;

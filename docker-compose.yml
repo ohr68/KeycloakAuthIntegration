@@ -28,6 +28,8 @@ services:
         condition: service_started
       keycloak.auth.integration.consumers:
         condition: service_started
+      redis:
+        condition: service_started
     networks:
       - keycloak-net
     healthcheck:
@@ -37,7 +39,7 @@ services:
       start_period: 5s
       timeout: 5s
     command: sh -c "sleep 10 && dotnet ef database update && dotnet WebApi.dll"
-    
+  
   auth.database:
     container_name: auth_database
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -136,11 +138,30 @@ services:
     networks:
       - keycloak-net
 
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    command: [ "redis-server", "--save", "60", "1", "--loglevel", "verbose" ]
+    networks:
+      - keycloak-net
+
 networks:
   keycloak-net:
     driver: bridge
-      
+
 volumes:
   keycloak_data:
   authdatabase-data:
   messagingdatabase-data:
+  redis_data:
+      

@@ -4,7 +4,7 @@ using Refit;
 
 namespace KeycloakAuthIntegration.Keycloak.Requests;
 
-public interface IRoleRequests : IRequest
+public interface IClientRoleRequests : IRequest
 {
     [Headers("Content-Type: application/json")]
     [Get("/admin/realms/{realm}/clients/{clientId}/roles/{roleName}")]

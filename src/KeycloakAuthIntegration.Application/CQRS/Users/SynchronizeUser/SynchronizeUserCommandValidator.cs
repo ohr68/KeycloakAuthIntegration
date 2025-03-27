@@ -6,11 +6,11 @@ public class SynchronizeUserCommandValidator : AbstractValidator<SynchronizeUser
 {
     public SynchronizeUserCommandValidator()
     {
-        RuleFor(u => u.Id)
+        RuleFor(s => s.Id)
             .NotEmpty()
             .WithMessage("É obrigatório informar o Id do usuário.");
 
-        RuleFor(u => u.Status)
+        RuleFor(s => s.Status)
             .IsInEnum()
             .WithMessage("Informe um status válido.");
     }

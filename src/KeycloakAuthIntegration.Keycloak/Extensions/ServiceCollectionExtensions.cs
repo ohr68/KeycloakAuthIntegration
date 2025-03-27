@@ -61,6 +61,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IRealmHandler, RealmHandler>();
         services.AddScoped<IKeycloakClientHandler, KeycloakClientHandler>();
+        services.AddScoped<IJwtService, JwtService>();
+        services.AddScoped<ISessionService, SessionService>();
         
         return services;
     }

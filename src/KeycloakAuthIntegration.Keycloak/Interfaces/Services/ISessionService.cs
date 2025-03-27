@@ -2,5 +2,5 @@
 
 public interface ISessionService
 {
-    Task<bool> LogoutAsync(string realm, CancellationToken cancellationToken);
+    Task<bool> LogoutAsync(string userId, CancellationToken cancellationToken);
 }

@@ -9,6 +9,9 @@ using KeycloakAuthIntegration.Keycloak.Interfaces;
 using KeycloakAuthIntegration.Keycloak.Interfaces.Services;
 using KeycloakAuthIntegration.Keycloak.RequestHandlers;
 using KeycloakAuthIntegration.Keycloak.Requests;
+using KeycloakAuthIntegration.Keycloak.Saga.CreateUser;
+using KeycloakAuthIntegration.Keycloak.Saga.Interfaces;
+using KeycloakAuthIntegration.Keycloak.Saga.Interfaces.CreateUser;
 using KeycloakAuthIntegration.Keycloak.Services;
 using KeycloakAuthIntegration.Messaging.Application.Extensions;
 using KeycloakAuthIntegration.Messaging.Models;
@@ -110,9 +113,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthRequestHandler, AuthRequestHandler>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IClientRoleService, ClientRoleService>();
+        services.AddScoped<IRealmRoleService, RealmRoleService>();
         services.AddScoped<IRealmHandler, RealmHandler>();
         services.AddScoped<IKeycloakClientHandler, KeycloakClientHandler>();
+        services.AddScoped<ICreateUserHandler, CreateUserHandler>();
+        services.AddScoped<ICreateUserSaga, CreateUserSaga>();
         
         return services;
     }

@@ -6,13 +6,13 @@ public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
     public LoginCommandValidator()
     {
-        RuleFor(a => a.Username)
+        RuleFor(l => l.Username)
             .NotEmpty()
             .WithMessage("É obrigatório informar o nome do usuário.")
             .MaximumLength(100)
             .WithMessage("O nome de usuário deve possuir no máximo 100 caracteres.");
 
-        RuleFor(a => a.Password)
+        RuleFor(l => l.Password)
             .NotEmpty()
             .WithMessage("É obrigatório informar a senha.");
     }

@@ -25,16 +25,25 @@ public class GlobalExceptionFilter: IExceptionFilter
             ForbiddenException => StatusCodes.Status403Forbidden,
             NotFoundException => StatusCodes.Status404NotFound,
             ValidationException => StatusCodes.Status422UnprocessableEntity,
-            DbUpdateException { InnerException: SqlException { Number: 2627 } } => StatusCodes.Status409Conflict, // Unique constraint violation (SQL Server error code 2627)
-            DbUpdateException { InnerException: SqlException { Number: 547 } } => StatusCodes.Status400BadRequest, // Foreign key constraint violation (SQL Server error code 547)
-            DbUpdateException => StatusCodes.Status500InternalServerError, // Generic database error
+            DbUpdateException { InnerException: SqlException { Number: 2601 } } => StatusCodes.Status409Conflict, // Unique constraint violation
+            DbUpdateException { InnerException: SqlException { Number: 547 } } => StatusCodes.Status400BadRequest, // Foreign key violation
+            DbUpdateException => StatusCodes.Status500InternalServerError, // Generic DB error
             _ => StatusCodes.Status500InternalServerError
+        };
+
+        var message = context.Exception switch
+        {
+            BadRequestException or UnauthorizedException or ForbiddenException or NotFoundException or ValidationException => context.Exception.Message,
+            DbUpdateException { InnerException: SqlException { Number: 2601 } } => context.Exception.InnerException.Message, // Unique constraint violation
+            DbUpdateException { InnerException: SqlException { Number: 547 } } => context.Exception.InnerException.Message, // Foreign key violation
+            DbUpdateException => context.Exception.InnerException?.Message ?? context.Exception.Message, // Generic DB error
+            _ => context.Exception.Message
         };
 
         context.Result = new ObjectResult(new ProblemDetails
         {
             Title = "Ocorreu um erro",
-            Detail = context.Exception.Message,
+            Detail = message,
             Type = context.Exception.GetType().Name,
             Status = statusCode
         })

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using KeycloakAuthIntegration.Caching.Extensions;
 using KeycloakAuthIntegration.Domain.Interfaces;
 using KeycloakAuthIntegration.Keycloak.Configuration;
 using KeycloakAuthIntegration.Keycloak.Constants;
@@ -9,6 +10,7 @@ using KeycloakIntegration.Common.Exceptions;
 using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 
 namespace KeycloakAuthIntegration.Application.CQRS.Auth.Login;
@@ -18,6 +20,7 @@ public class LoginCommandHandler(
     IAuthRequestHandler authRequestHandler,
     IAuthService authService,
     IPasswordHasher passwordHasher,
+    IDistributedCache cache,
     IOptions<KeycloakUserOptions> keycloakDefaultUser,
     IValidator<LoginCommand> validator) : IRequestHandler<LoginCommand, LoginResult>
 {
@@ -42,6 +45,10 @@ public class LoginCommandHandler(
 
         var authResponse = await authService.AuthenticateAsync(request.Adapt<AuthRequest>(), cancellationToken);
 
+        Console.WriteLine($"Setting cache for user '{user.Id}'");
+        await cache.SetRecordAsync(user.Id.ToString(), authResponse.AccessToken, keycloakDefaultUser.Value.ExpireIn, cancellationToken: cancellationToken);
+        Console.WriteLine($"Cached successfully. Expires In {keycloakDefaultUser.Value.ExpireIn}");
+        
         return authResponse.Adapt<LoginResult>();
     }
 }

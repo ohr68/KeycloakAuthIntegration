@@ -29,4 +29,8 @@ public static class DistributedCacheExtensions
         return (string.IsNullOrEmpty(jsonData) ? default! : JsonSerializer.Deserialize<T>(jsonData)) ??
                throw new InvalidOperationException("Não foi possível deserializar o registro.");
     }
+
+    public static async Task RemoveRecordAsync(this IDistributedCache cache, string recordId,
+        CancellationToken cancellationToken = default)
+        => await cache.RemoveAsync(recordId, cancellationToken);
 }
