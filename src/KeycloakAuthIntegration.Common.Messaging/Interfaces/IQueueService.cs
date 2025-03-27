@@ -1,4 +1,4 @@
-﻿namespace KeycloakAuthIntegration.Messaging.Interfaces;
+﻿namespace KeycloakAuthIntegration.Common.Messaging.Interfaces;
 
 public interface IQueueService
 {

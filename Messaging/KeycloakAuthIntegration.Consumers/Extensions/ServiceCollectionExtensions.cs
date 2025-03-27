@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using System.Text.Json;
+using KeycloakAuthIntegration.Common.Messaging.Interfaces;
+using KeycloakAuthIntegration.Common.Messaging.Services;
 using KeycloakAuthIntegration.Consumers.Consumers;
 using KeycloakAuthIntegration.Keycloak;
 using KeycloakAuthIntegration.Keycloak.Configuration;
@@ -53,6 +55,8 @@ public static class ServiceCollectionExtensions
                 config.ConfigureEndpoints(context);
             });
         });
+        
+        services.AddScoped<IQueueService, QueueService>();
 
         return services;
     }

@@ -7,8 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\KeycloakAuthIntegration.Common.Messaging\KeycloakAuthIntegration.Common.Messaging.csproj" />
-      <ProjectReference Include="..\..\src\KeycloakIntegration.Common\KeycloakIntegration.Common.csproj" />
+      <PackageReference Include="MassTransit" Version="8.4.0" />
     </ItemGroup>
 
 </Project>

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
 using FluentValidation;
+using KeycloakAuthIntegration.Common.Messaging.Interfaces;
 using KeycloakAuthIntegration.Domain.Entities;
 using KeycloakAuthIntegration.Domain.Interfaces;
-using KeycloakAuthIntegration.Messaging.Interfaces;
 using KeycloakAuthIntegration.ORM.Context;
 using KeycloakIntegration.Common.Exceptions;
 using KeycloakIntegration.Common.Messaging.Users;

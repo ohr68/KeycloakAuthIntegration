@@ -1,4 +1,4 @@
-﻿namespace KeycloakAuthIntegration.Messaging.Domain.Enums;
+﻿namespace KeycloakAuthIntegration.Common.Messaging.Enums;
 
 public enum SyncStatus
 {

@@ -1,4 +1,4 @@
-﻿using KeycloakAuthIntegration.Messaging.Domain.Enums;
+﻿using KeycloakAuthIntegration.Common.Messaging.Enums;
 
 namespace KeycloakAuthIntegration.Messaging.Domain.Entities;
 

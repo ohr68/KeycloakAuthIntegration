@@ -1,7 +1,7 @@
-﻿using KeycloakAuthIntegration.Messaging.Interfaces;
+﻿using KeycloakAuthIntegration.Common.Messaging.Interfaces;
 using MassTransit;
 
-namespace KeycloakAuthIntegration.Messaging.Services;
+namespace KeycloakAuthIntegration.Common.Messaging.Services;
 
 public class QueueService(IBus bus): IQueueService
 {

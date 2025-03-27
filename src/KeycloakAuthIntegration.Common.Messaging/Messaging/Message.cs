@@ -1,4 +1,4 @@
-﻿namespace KeycloakIntegration.Common.Messaging;
+﻿namespace KeycloakAuthIntegration.Common.Messaging.Messaging;
 
 public class Message
 {

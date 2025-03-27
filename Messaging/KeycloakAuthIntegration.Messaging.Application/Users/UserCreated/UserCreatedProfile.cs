@@ -1,4 +1,5 @@
-﻿using KeycloakAuthIntegration.Keycloak.Constants;
+﻿using KeycloakAuthIntegration.Common.Messaging.Messaging.Users;
+using KeycloakAuthIntegration.Keycloak.Constants;
 using KeycloakAuthIntegration.Keycloak.Models;
 using KeycloakAuthIntegration.Keycloak.Models.Dtos;
 using KeycloakAuthIntegration.Messaging.Domain.Entities;
@@ -37,5 +38,6 @@ public class UserCreatedProfile : IRegister
             }));
 
         config.NewConfig<UserSync, UserCreatedResult>();
+        config.NewConfig<UserCreatedResult, UserSynchronized>();
     }
 }

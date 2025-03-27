@@ -1,4 +1,6 @@
 ﻿using System.Text.Json;
+using KeycloakAuthIntegration.Common.Messaging.Interfaces;
+using KeycloakAuthIntegration.Common.Messaging.Messaging.Users;
 using KeycloakAuthIntegration.Messaging.Application.Users.UserCreated;
 using KeycloakIntegration.Common.Messaging.Users;
 using Mapster;
@@ -7,7 +9,7 @@ using MediatR;
 
 namespace KeycloakAuthIntegration.Consumers.Consumers;
 
-public class UserCreatedConsumer(IMediator mediator) : IConsumer<UserCreated>
+public class UserCreatedConsumer(IMediator mediator, IQueueService queueService) : IConsumer<UserCreated>
 {
     public async Task Consume(ConsumeContext<UserCreated> context)
     {
@@ -20,5 +22,9 @@ public class UserCreatedConsumer(IMediator mediator) : IConsumer<UserCreated>
         var result = await mediator.Send(userCreatedCommand, context.CancellationToken);
         
         Console.WriteLine(JsonSerializer.Serialize(result));
+
+        Console.WriteLine("Sending UserSynchronized to queue.");
+        await queueService.Publish(message.Adapt<UserSynchronized>(), context.CancellationToken);
+        Console.WriteLine("UserSynchronized sent to queue.");
     }
 }

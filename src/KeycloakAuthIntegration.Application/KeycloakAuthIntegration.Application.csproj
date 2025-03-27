@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\KeycloakAuthIntegration.Common.Messaging\KeycloakAuthIntegration.Common.Messaging.csproj" />
       <ProjectReference Include="..\KeycloakAuthIntegration.Domain\KeycloakAuthIntegration.Domain.csproj" />
       <ProjectReference Include="..\KeycloakAuthIntegration.Keycloak\KeycloakAuthIntegration.Keycloak.csproj" />
       <ProjectReference Include="..\KeycloakAuthIntegration.Messaging\KeycloakAuthIntegration.Messaging.csproj" />

@@ -64,6 +64,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeycloakAuthIntegration.Messaging.Application", "Messaging\KeycloakAuthIntegration.Messaging.Application\KeycloakAuthIntegration.Messaging.Application.csproj", "{8A3774DE-AA47-4825-A6A5-E35695D5D607}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeycloakAuthIntegration.Common.Messaging", "src\KeycloakAuthIntegration.Common.Messaging\KeycloakAuthIntegration.Common.Messaging.csproj", "{E5C3C53F-3A65-44B3-9BD7-7BEE4053BADD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +128,10 @@ Global
 		{8A3774DE-AA47-4825-A6A5-E35695D5D607}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A3774DE-AA47-4825-A6A5-E35695D5D607}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A3774DE-AA47-4825-A6A5-E35695D5D607}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5C3C53F-3A65-44B3-9BD7-7BEE4053BADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5C3C53F-3A65-44B3-9BD7-7BEE4053BADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5C3C53F-3A65-44B3-9BD7-7BEE4053BADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5C3C53F-3A65-44B3-9BD7-7BEE4053BADD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{79F71A03-6834-4A3F-B405-0CF9DEF48B3A} = {8B1A6D89-3A1C-408B-97CE-CE887971E2C5}
@@ -155,5 +161,6 @@ Global
 		{2A3E2131-3A36-4B19-B3FD-8869B9EE3A71} = {A13C7C17-FD6A-495F-BFCA-D5D06AD69D5F}
 		{A31AAC89-A816-4A58-A280-4453C4C7E613} = {84EE3362-C223-434F-A8AB-0DFC23B43030}
 		{8A3774DE-AA47-4825-A6A5-E35695D5D607} = {A31AAC89-A816-4A58-A280-4453C4C7E613}
+		{E5C3C53F-3A65-44B3-9BD7-7BEE4053BADD} = {48763435-3359-4444-9CCC-9836E286F524}
 	EndGlobalSection
 EndGlobal

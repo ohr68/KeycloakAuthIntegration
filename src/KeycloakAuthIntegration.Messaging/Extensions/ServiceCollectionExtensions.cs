@@ -1,6 +1,7 @@
-﻿using KeycloakAuthIntegration.Messaging.Interfaces;
+﻿using KeycloakAuthIntegration.Common.Messaging.Interfaces;
+using KeycloakAuthIntegration.Common.Messaging.Services;
+using KeycloakAuthIntegration.Messaging.Consumers;
 using KeycloakAuthIntegration.Messaging.Models;
-using KeycloakAuthIntegration.Messaging.Services;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,8 @@ public static class ServiceCollectionExtensions
         
         services.AddMassTransit(busConfig =>
         {
+            busConfig.AddConsumer<UserSynchronizedConsumer>();
+            
             busConfig.UsingRabbitMq((context, config) =>
             {
                 var massTansitSettings = configuration.GetSection("MasstransitSettings").Get<MassTransitSettings>()
