@@ -1,6 +1,6 @@
-﻿namespace KeycloakAuthIntegration.Messaging.Domain.Messaging;
+﻿namespace KeycloakIntegration.Common.Messaging.Users;
 
-public class UserCreated
+public class UserCreated : Message
 {
     public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; }

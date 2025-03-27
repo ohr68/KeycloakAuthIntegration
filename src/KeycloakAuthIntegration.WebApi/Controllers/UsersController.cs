@@ -23,5 +23,7 @@ public class UsersController(IMediator mediator) : BaseController
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand createUserRequest,
         CancellationToken cancellationToken = default)
-          => Ok(await mediator.Send(createUserRequest, cancellationToken));
+        => Created(string.Empty,
+            new ApiResponseWithData<CreateUserResult>(await mediator.Send(createUserRequest, cancellationToken), true,
+                "Usuário cadastrado com sucesso."));
 }

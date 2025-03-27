@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KeycloakIntegration.Common")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c22b5f9a4a4c3e88aff10ab409d721ead99ff49")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c05e5aab369dee8a68b15c2b33b7d16f62b7479b")]
 [assembly: System.Reflection.AssemblyProductAttribute("KeycloakIntegration.Common")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KeycloakIntegration.Common")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

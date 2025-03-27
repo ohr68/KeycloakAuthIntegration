@@ -44,7 +44,7 @@ public static class ServiceCollectionExtensions
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(baseUrl))
                 .AddHttpMessageHandler<CustomRequestHandler>();
 
-            _ = refitInterface.DeclaringType == typeof(IAuthRequests) 
+            _ = refitInterface == typeof(IAuthRequests) 
                 ? refitClient 
                 : refitClient.AddHttpMessageHandler<AuthHeaderHandler>();
         }
@@ -57,6 +57,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthRequestHandler, AuthRequestHandler>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IRealmHandler, RealmHandler>();
+        services.AddScoped<IKeycloakClientHandler, KeycloakClientHandler>();
         
         return services;
     }

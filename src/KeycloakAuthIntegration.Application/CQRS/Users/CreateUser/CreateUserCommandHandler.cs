@@ -1,10 +1,11 @@
-﻿using FluentValidation;
+﻿using System.Text.Json;
+using FluentValidation;
 using KeycloakAuthIntegration.Domain.Entities;
 using KeycloakAuthIntegration.Domain.Interfaces;
-using KeycloakAuthIntegration.Domain.Messaging.Users;
 using KeycloakAuthIntegration.Messaging.Interfaces;
 using KeycloakAuthIntegration.ORM.Context;
 using KeycloakIntegration.Common.Exceptions;
+using KeycloakIntegration.Common.Messaging.Users;
 using Mapster;
 using MediatR;
 using Serilog;
@@ -35,9 +36,13 @@ public class CreateUserCommandHandler(
             throw new BadRequestException("Houve uma falha ao inserir o usuário. Tente novamente.");
 
         Log.Information("Enviando usuário cadastrado para fila.");
-        await queueService.Send(user.Adapt<UserCreated>(), cancellationToken);
-        Log.Information("Produto enviado para fila com sucesso.");
+        await queueService.Publish(user.Adapt<UserCreated>(), cancellationToken);
+        Log.Information("Usuário enviado para fila com sucesso.");
 
-        return user.Adapt<CreateUserResult>();
+        Console.WriteLine(JsonSerializer.Serialize(user));
+        var result = user.Adapt<CreateUserResult>();
+        Console.WriteLine(JsonSerializer.Serialize(result));
+        
+        return result;
     }
 }

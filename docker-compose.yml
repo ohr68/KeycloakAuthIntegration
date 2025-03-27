@@ -1,7 +1,7 @@
 services:
   web.api:
     container_name: web_api
-    image: ${DOCKER_REGISTRY-}webapi
+    image: ${DOCKER_REGISTRY-}keycloak.authintegration.webapi
     build:
       context: .
       dockerfile: src/KeycloakAuthIntegration.WebApi/Dockerfile
@@ -26,6 +26,8 @@ services:
         condition: service_started
       auth.database:
         condition: service_started
+      keycloak.auth.integration.consumers:
+        condition: service_started
     networks:
       - keycloak-net
     healthcheck:
@@ -48,6 +50,41 @@ services:
       - keycloak-net
     volumes:
       - authdatabase-data:/var/opt/mssql
+    healthcheck:
+      test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1" ]
+      interval: 10s
+      retries: 5
+  
+  keycloak.auth.integration.consumers:
+    container_name: keycloak_auth_integration_consumers
+    image: ${DOCKER_REGISTRY-}keycloak.authintegration.consumers
+    build:
+      context: .
+      dockerfile: Messaging/KeycloakAuthIntegration.Consumers/Dockerfile
+    depends_on:
+      keycloak:
+        condition: service_started
+      messaging.database:
+        condition: service_started
+    environment:
+      - DOTNETCORE_ENVIRONMENT=Development
+    networks:
+      - keycloak-net
+    restart: always
+    command: sh -c "sleep 10 && dotnet ef database update && dotnet KeycloakAuthIntegration.Consumers.dll"
+  
+  messaging.database:
+    container_name: messaging_database
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD}
+    ports:
+      - "1434:1434"
+    networks:
+      - keycloak-net
+    volumes:
+      - messagingdatabase-data:/var/opt/mssql
     healthcheck:
       test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1" ]
       interval: 10s
@@ -80,7 +117,10 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HEALTH_ENABLED: "true"
-      KC_LOG_LEVEL: info
+      KC_LOG_LEVEL: debug
+      KC_LOG_OUTPUT: json   # Options: json, default (plain text), file
+      KC_LOG_FILE: /opt/keycloak/logs/keycloak.log
+      KC_PROFILE: dev
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:7080/health/ready" ]
       interval: 15s
@@ -88,6 +128,7 @@ services:
       retries: 15
     volumes:
       - keycloak_data:/opt/keycloak/data
+      - ./keycloak-logs:/opt/keycloak/logs
     command: [ "start-dev", "--http-port", "7080", "--https-port", "7443" ]
     ports:
       - "7080:7080"
@@ -102,3 +143,4 @@ networks:
 volumes:
   keycloak_data:
   authdatabase-data:
+  messagingdatabase-data:

@@ -22,7 +22,7 @@ public class CustomRequestHandler : DelegatingHandler
             HttpStatusCode.Unauthorized => new UnauthorizedException(keycloakError?.Message ?? content),
             HttpStatusCode.Forbidden => new ForbiddenException(keycloakError?.Message ?? content),
             HttpStatusCode.NotFound => new NotFoundException(keycloakError?.Message ?? content),
-            _ => new Exception()
+            _ => new Exception(content)
         };
         
         throw exception;

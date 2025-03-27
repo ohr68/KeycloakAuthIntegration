@@ -1,9 +1,11 @@
-﻿namespace KeycloakAuthIntegration.Domain.Messaging.Users;
+﻿using MediatR;
 
-public class UserCreated : Message
+namespace KeycloakAuthIntegration.Messaging.Application.Users.UserCreated;
+
+public class UserCreatedCommand : IRequest<UserCreatedResult>
 {
     public Guid Id { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public string? Username { get; set; }
     public string? Email { get; set; }
     public string? FirstName { get; set; }

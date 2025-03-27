@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationLayer).Assembly));
         services.AddScoped<IPasswordHasher, CustomPasswordHasher>();
-        
+
         return services;
     }
 
@@ -31,6 +31,8 @@ public static class ServiceCollectionExtensions
         services.AddMapster();
 
         TypeAdapterConfig.GlobalSettings.Scan(AppDomain.CurrentDomain.GetAssemblies());
+        TypeAdapterConfig.GlobalSettings.AllowImplicitSourceInheritance = true;
+        TypeAdapterConfig.GlobalSettings.AllowImplicitDestinationInheritance = true;
 
         return services;
     }

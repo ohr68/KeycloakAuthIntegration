@@ -15,27 +15,7 @@ public class UserSyncConfiguration : IEntityTypeConfiguration<UserSync>
         builder.Property(u => u.Id)
             .HasColumnType("uniqueidentifier")
             .IsRequired();
-
-        builder.Property(u => u.Username)
-            .HasColumnType("varchar(100)")
-            .IsRequired();
-
-        builder.Property(u => u.Email)
-            .HasColumnType("varchar(150)")
-            .IsRequired();
-
-        builder.Property(u => u.FirstName)
-            .HasColumnType("varchar(100)")
-            .IsRequired();
-
-        builder.Property(u => u.LastName)
-            .HasColumnType("varchar(100)")
-            .IsRequired();
-
-        builder.Property(u => u.Password)
-            .HasColumnType("varchar(max)")
-            .IsRequired();
-
+        
         builder.Property(u => u.CreatedAt)
             .HasColumnType("datetime2(7)")
             .IsRequired();
