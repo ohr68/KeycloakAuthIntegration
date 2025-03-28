@@ -7,4 +7,5 @@ public class SynchronizeUserCommand : IRequest<SynchronizeUserResult>
 {
     public Guid Id { get; set; }
     public SyncStatus Status { get; set; }
+    public UserSyncOperation Operation { get; set; }
 }

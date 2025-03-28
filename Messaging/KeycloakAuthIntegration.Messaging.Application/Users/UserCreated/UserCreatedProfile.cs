@@ -1,4 +1,5 @@
 ﻿using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
+using KeycloakAuthIntegration.Common.Messaging.Enums;
 using KeycloakAuthIntegration.Keycloak.Constants;
 using KeycloakAuthIntegration.Keycloak.Models;
 using KeycloakAuthIntegration.Keycloak.Models.Dtos;
@@ -38,6 +39,7 @@ public class UserCreatedProfile : IRegister
             }));
 
         config.NewConfig<UserSync, UserCreatedResult>();
-        config.NewConfig<UserCreatedResult, UserSynchronized>();
+        config.NewConfig<UserCreatedResult, UserSynchronized>()
+            .ConstructUsing(u => new UserSynchronized(u.Id, u.Status, UserSyncOperation.Created));
     }
 }

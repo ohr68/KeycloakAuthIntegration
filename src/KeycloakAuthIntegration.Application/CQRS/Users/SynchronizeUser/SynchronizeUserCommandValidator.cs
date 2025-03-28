@@ -13,5 +13,9 @@ public class SynchronizeUserCommandValidator : AbstractValidator<SynchronizeUser
         RuleFor(s => s.Status)
             .IsInEnum()
             .WithMessage("Informe um status válido.");
+
+        RuleFor(s => s.Operation)
+            .IsInEnum()
+            .WithMessage("Informe uma operação válida.");
     }
 }

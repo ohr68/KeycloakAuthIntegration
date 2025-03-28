@@ -18,15 +18,20 @@ public class UserUpdatedCommandHandler(MessagingDbContext context, IUserService 
         
         if(!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
-        
-        var userSync = request.Adapt<UserSync>();
-        context.UsersSync.Add(userSync);
 
-        var saveResult = await context.SaveChangesAsync(cancellationToken) > 0;
+        var userSync = await context.UsersSync.SingleOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
 
-        if (!saveResult)
-            throw new BadRequestException("Houve uma falha ao inserir o usuário. Tente novamente.");
-        
+        if (userSync is null)
+        {
+            userSync = request.Adapt<UserSync>();
+            context.UsersSync.Add(userSync);
+
+            var saveResult = await context.SaveChangesAsync(cancellationToken) > 0;
+
+            if (!saveResult)
+                throw new BadRequestException("Houve uma falha ao inserir o usuário. Tente novamente.");
+        }
+
         var userRepresentation = request.Adapt<UserRepresentation>();
 
         await userService.UpdateUserAsync(request.Username!, userRepresentation, cancellationToken);

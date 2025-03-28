@@ -49,6 +49,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnType("bit")
             .IsRequired();
 
+        builder.Property(u => u.Status)
+            .HasColumnType("int")
+            .IsRequired();
+        
         builder.HasIndex(u => u.Username)
             .IsUnique();
 

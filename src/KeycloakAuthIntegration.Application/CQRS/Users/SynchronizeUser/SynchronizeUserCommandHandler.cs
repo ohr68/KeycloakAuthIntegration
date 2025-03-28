@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using KeycloakAuthIntegration.Common.Messaging.Enums;
 using KeycloakAuthIntegration.ORM.Context;
 using KeycloakIntegration.Common.Exceptions;
 using MediatR;
@@ -17,8 +18,19 @@ public class SynchronizeUserCommandHandler(AuthDbContext context, IValidator<Syn
 
         var user = await context.Users.SingleOrDefaultAsync(u => u.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException($"Usuário {request.Id} não encontrado.");
+
+        switch (request.Operation)
+        {
+            case UserSyncOperation.Created:
+                user.CreationSynchronized();
+                break;
+            case UserSyncOperation.Updated:
+                user.UpdateSynchronized();
+                break;
+            default:
+                throw new ValidationException("Operação não suportada.");
+        }
         
-        user.Synchronized();
         context.Entry(user).State = EntityState.Modified;
 
         var rowsAffected = await context.SaveChangesAsync(cancellationToken) > 0;

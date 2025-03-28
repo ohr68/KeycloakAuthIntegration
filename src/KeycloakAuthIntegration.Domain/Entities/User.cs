@@ -1,4 +1,6 @@
-﻿namespace KeycloakAuthIntegration.Domain.Entities;
+﻿using KeycloakAuthIntegration.Common.Messaging.Enums;
+
+namespace KeycloakAuthIntegration.Domain.Entities;
 
 public class User : EntityBase
 {
@@ -8,11 +10,29 @@ public class User : EntityBase
     public string? LastName { get; set; }
     public string? Password { get; set; }
     public bool LoginAllowed { get; set; }
+    public SyncStatus Status { get; set; }
 
-    public void Synchronized()
+    public void CreationSynchronized()
     {
-        UpdatedAt = DateTime.UtcNow;
+        Updated();
         LoginAllowed = true;
+        Synchronized();
+    }
+
+    public void UpdateSynchronized()
+    {
+        Updated();
+        Synchronized();
+    }
+
+    public void MustSynchronize()
+    {
+        Status = SyncStatus.Pending;
+    }
+
+    private void Synchronized()
+    {
+        Status = SyncStatus.Completed;
     }
 
     public bool CanLogin() => LoginAllowed;

@@ -1,4 +1,5 @@
 ﻿using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
+using KeycloakAuthIntegration.Common.Messaging.Enums;
 using KeycloakAuthIntegration.Keycloak.Constants;
 using KeycloakAuthIntegration.Keycloak.Models;
 using KeycloakAuthIntegration.Messaging.Domain.Entities;
@@ -19,21 +20,11 @@ public class UserUpdatedProfile : IRegister
                 LastName = u.LastName,
                 Email = u.Email,
                 Enabled = true,
-                EmailVerified = true,
-                Credentials = string.IsNullOrEmpty(u.Password)
-                    ? null
-                    : new[]
-                    {
-                        new CredentialRepresentation
-                        {
-                            Type = CredentialType.Password,
-                            Value = u.Password,
-                            Temporary = false
-                        }
-                    }
+                EmailVerified = true
             });
 
         config.NewConfig<UserSync, UserUpdatedResult>();
-        config.NewConfig<UserUpdatedResult, UserSynchronized>();
+        config.NewConfig<UserUpdatedResult, UserSynchronized>()
+            .ConstructUsing(u => new UserSynchronized(u.Id, u.Status, UserSyncOperation.Updated));
     }
 }

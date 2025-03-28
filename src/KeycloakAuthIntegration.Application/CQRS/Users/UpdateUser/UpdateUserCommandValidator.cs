@@ -26,11 +26,5 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
             .WithMessage("É obrigatório informar o sobrenome.")
             .MaximumLength(100)
             .WithMessage("O tamanho máximo permitido para o sobrenome é de 100 caracteres.");
-
-        When(u => !string.IsNullOrEmpty(u.Password), () =>
-        {
-            RuleFor(c => c.Password)
-                .SetValidator(new StrongPasswordValidator<UpdateUserCommand>()!);
-        });
     }
 }

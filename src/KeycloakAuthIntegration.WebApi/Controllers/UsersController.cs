@@ -24,6 +24,7 @@ public class UsersController(IMediator mediator) : BaseController
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateUserResult>), StatusCodes.Status200OK, contentType: "application/json")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest, contentType: "application/json")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict, contentType: "application/json")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity, contentType: "application/json")]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand createUserRequest,
         CancellationToken cancellationToken = default)
@@ -43,6 +44,7 @@ public class UsersController(IMediator mediator) : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK, contentType: "application/json")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest, contentType: "application/json")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound, contentType: "application/json")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict, contentType: "application/json")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity, contentType: "application/json")]
     public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserCommand updateUserRequest,
         CancellationToken cancellationToken = default)
