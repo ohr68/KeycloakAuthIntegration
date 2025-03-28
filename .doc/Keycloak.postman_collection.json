@@ -1,0 +1,522 @@
+{
+	"info": {
+		"_postman_id": "42529e8e-9ff8-4ec2-b433-b1c8fc70eee5",
+		"name": "Keycloak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3331352"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonResponse = pm.response.json();\r",
+							"var token = jsonResponse.access_token;\r",
+							"var refreshToken = jsonResponse.refresh_token;\r",
+							"\r",
+							"pm.environment.set(\"Token\", token);\r",
+							"pm.environment.set(\"RefreshToken\", refreshToken);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "web-api",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "UtJLxXDr1BXrUQaYTneMqCDm7Zq7bw2Y",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Keycloak_Url}}/realms/{{Realm}}/protocol/openid-connect/token",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"realms",
+						"{{Realm}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Api_Url}}/api/Test",
+					"host": [
+						"{{Api_Url}}"
+					],
+					"path": [
+						"api",
+						"Test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RefreshToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonResponse = pm.response.json();\r",
+							"var token = jsonResponse.access_token;\r",
+							"\r",
+							"pm.environment.set(\"Token\", token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "web-api",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "xPjpEF6u4kdbvtmgh3jACGa3WPAprHUa",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "{{RefreshToken}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Keycloak_Url}}/realms/{{Realm}}/protocol/openid-connect/token",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"realms",
+						"{{Realm}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": null,\r\n    \"username\": \"testemaldito\",\r\n    \"firstName\": \"teste\",\r\n    \"lastName\": \"maldito\",\r\n    \"email\": \"teste@maldito.com\",\r\n    \"emailVerified\": true,\r\n    \"attributes\": {\r\n        \"custom_id\": [\r\n            \"83ed89fd-17a1-4dda-dfbf-08dd6c7babe6\"\r\n        ]\r\n    },\r\n    \"userProfileMetadata\": null,\r\n    \"self\": null,\r\n    \"origin\": null,\r\n    \"createdTimestamp\": 0,\r\n    \"enabled\": true,\r\n    \"totp\": false,\r\n    \"federationLink\": null,\r\n    \"serviceAccountClientId\": null,\r\n    \"credentials\": [\r\n        {\r\n            \"id\": null,\r\n            \"type\": \"password\",\r\n            \"userLabel\": null,\r\n            \"createdDate\": 0,\r\n            \"secretData\": null,\r\n            \"credentialData\": null,\r\n            \"priority\": 0,\r\n            \"value\": \"zm98kfVKmTQO\\u002B5SCptQ\\u002Bcw==;qZfcO844TreJ\\u002BdHFcGB8U3JVKCMvr6xcbLLbRFOqYeg=\",\r\n            \"temporary\": false,\r\n            \"device\": null,\r\n            \"hashedSaltedValue\": null,\r\n            \"salt\": null,\r\n            \"hashIterations\": 0,\r\n            \"counter\": 0,\r\n            \"algorithm\": null,\r\n            \"digits\": 0,\r\n            \"period\": 0,\r\n            \"config\": null\r\n        }\r\n    ],\r\n    \"disableableCredentialTypes\": null,\r\n    \"requiredActions\": null,\r\n    \"federatedIdentities\": null,\r\n    \"realmRoles\": null,\r\n    \"clientRoles\": null,\r\n    \"clientConsents\": null,\r\n    \"notBefore\": 0,\r\n    \"applicationRoles\": null,\r\n    \"socialLinks\": null,\r\n    \"groups\": null,\r\n    \"access\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/users",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/users",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListRoles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/clients/{{ClientId}}/roles",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"clients",
+						"{{ClientId}}",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserProfileConfig",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/users/profile",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetClientRoleById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/clients/{{Client_uuid}}/roles/",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"clients",
+						"{{Client_uuid}}",
+						"roles",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AssignRole",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": \"d3175b97-e15a-4faf-ba9f-701aec1244a0\",\r\n        \"name\": \"uma_protection\",\r\n        \"composite\": false,\r\n        \"clientRole\": true,\r\n        \"containerId\": \"fcd5442b-e5cd-4e67-bda1-0cdd29082af5\",\r\n        \"attributes\": {}\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/users/ff54dd77-972e-48c3-9397-de41fd4a0f92/role-mappings/clients/{{Client_uuid}}",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"users",
+						"ff54dd77-972e-48c3-9397-de41fd4a0f92",
+						"role-mappings",
+						"clients",
+						"{{Client_uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserByUsername",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/users?exact=true&username=testemaldito",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"users"
+					],
+					"query": [
+						{
+							"key": "exact",
+							"value": "true"
+						},
+						{
+							"key": "username",
+							"value": "testemaldito"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/users/ffa639f6-49d8-4fae-b25d-cc20c460904e/logout",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"users",
+						"ffa639f6-49d8-4fae-b25d-cc20c460904e",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRealmRoleByName",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/roles/admin",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"roles",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"teste\",\r\n    \"lastName\": \"maldito\",\r\n    \"email\": \"teste@maldito.com\",\r\n    \"credentials\": [\r\n        {\r\n            \"id\": null,\r\n            \"type\": \"password\",\r\n            \"userLabel\": null,\r\n            \"createdDate\": 0,\r\n            \"secretData\": null,\r\n            \"credentialData\": null,\r\n            \"priority\": 0,\r\n            \"value\": \"Senha@1234\",\r\n            \"temporary\": false,\r\n            \"device\": null,\r\n            \"hashedSaltedValue\": null,\r\n            \"salt\": null,\r\n            \"hashIterations\": 0,\r\n            \"counter\": 0,\r\n            \"algorithm\": null,\r\n            \"digits\": 0,\r\n            \"period\": 0,\r\n            \"config\": null\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Keycloak_Url}}/admin/realms/{{Realm}}/users/13f7e12d-6c3d-4341-bf0b-825af36a09ca",
+					"host": [
+						"{{Keycloak_Url}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{Realm}}",
+						"users",
+						"13f7e12d-6c3d-4341-bf0b-825af36a09ca"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
