@@ -25,6 +25,10 @@ public class AuthController(IMediator mediator) : BaseController
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns>Result of the login operation. If successful will contain the token. </returns>
     [HttpPost("login")]
+    [ProducesResponseType(typeof(ApiResponseWithData<LoginResult>), StatusCodes.Status200OK, contentType: "application/json")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest, contentType: "application/json")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound, contentType: "application/json")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity, contentType: "application/json")]
     public async Task<IActionResult> Login([FromBody] LoginCommand loginRequest,
         CancellationToken cancellationToken = default)
         => Ok(new ApiResponseWithData<LoginResult>
@@ -41,6 +45,8 @@ public class AuthController(IMediator mediator) : BaseController
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns>Result of the refresh token operation. If successful will contain the new token. </returns>
     [HttpPost("refresh-token")]
+    [ProducesResponseType(typeof(ApiResponseWithData<RefreshTokenResult>), StatusCodes.Status200OK, contentType: "application/json")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity, contentType: "application/json")]
     public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand refreshTokenRequest,
         CancellationToken cancellationToken = default)
         => Ok(new ApiResponseWithData<RefreshTokenResult>
@@ -57,6 +63,10 @@ public class AuthController(IMediator mediator) : BaseController
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns>Result of the logout operation.</returns>
     [HttpPost("logout")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK, contentType: "application/json")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest, contentType: "application/json")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound, contentType: "application/json")]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity, contentType: "application/json")]
     public async Task<IActionResult> Logout([FromBody] LogoutCommand logoutRequest,
         CancellationToken cancellationToken = default)
         => Ok(new ApiResponse

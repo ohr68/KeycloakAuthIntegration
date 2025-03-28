@@ -1,8 +1,6 @@
-﻿using System.Text.Json;
-using FluentValidation;
+﻿using FluentValidation;
 using KeycloakAuthIntegration.Keycloak.Interfaces.Services;
-using KeycloakAuthIntegration.Keycloak.Models.Dtos;
-using KeycloakAuthIntegration.Keycloak.Saga.Interfaces.CreateUser;
+using KeycloakAuthIntegration.Keycloak.Models;
 using KeycloakAuthIntegration.Messaging.Domain.Entities;
 using KeycloakAuthIntegration.Messaging.ORM.Context;
 using KeycloakIntegration.Common.Exceptions;
@@ -10,21 +8,17 @@ using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace KeycloakAuthIntegration.Messaging.Application.Users.UserCreated;
+namespace KeycloakAuthIntegration.Messaging.Application.Users.UserUpdated;
 
-public class UserCreatedCommandHandler(
-    MessagingDbContext context,
-    ICreateUserHandler createUserHandler,
-    IValidator<UserCreatedCommand> validator
-) : IRequestHandler<UserCreatedCommand, UserCreatedResult>
+public class UserUpdatedCommandHandler(MessagingDbContext context, IUserService userService, IValidator<UserUpdatedCommand> validator) : IRequestHandler<UserUpdatedCommand, UserUpdatedResult>
 {
-    public async Task<UserCreatedResult> Handle(UserCreatedCommand request, CancellationToken cancellationToken)
+    public async Task<UserUpdatedResult> Handle(UserUpdatedCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
+        
+        if(!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
-
+        
         var userSync = request.Adapt<UserSync>();
         context.UsersSync.Add(userSync);
 
@@ -32,10 +26,10 @@ public class UserCreatedCommandHandler(
 
         if (!saveResult)
             throw new BadRequestException("Houve uma falha ao inserir o usuário. Tente novamente.");
+        
+        var userRepresentation = request.Adapt<UserRepresentation>();
 
-        var userRepresentation = request.Adapt<CreateUserFlowDto>();
-
-        await createUserHandler.Handle(userRepresentation, cancellationToken);
+        await userService.UpdateUserAsync(request.Username!, userRepresentation, cancellationToken);
 
         userSync.Synchronized();
         context.Entry(userSync).State = EntityState.Modified;
@@ -45,6 +39,6 @@ public class UserCreatedCommandHandler(
         if (!updateResult)
             throw new BadRequestException("Houve uma falha ao atualizar o usuário.");
 
-        return userSync.Adapt<UserCreatedResult>();
+        return userSync.Adapt<UserUpdatedResult>();
     }
 }

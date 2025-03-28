@@ -14,15 +14,15 @@ public class UserService(
     public async Task<bool> CreateUserAsync(UserRepresentation user, CancellationToken cancellationToken)
         => (await userRequests.CreateUserAsync(realmHandler.GetRealm(), user, cancellationToken)).IsSuccessStatusCode;
 
-    public async Task<bool> AssignRoleAsync(string userId, IEnumerable<RoleRepresentation> role,
+    public async Task<bool> AssignRoleAsync(string keycloakUserId, IEnumerable<RoleRepresentation> role,
         RoleType roleType,
         CancellationToken cancellationToken)
     {
         var success = roleType switch
         {
-            RoleType.Client => (await userRequests.AssignClientRoleAsync(realmHandler.GetRealm(), userId,
+            RoleType.Client => (await userRequests.AssignClientRoleAsync(realmHandler.GetRealm(), keycloakUserId,
                 keycloakClientHandler.GetClientUuid(), role, cancellationToken)).IsSuccessStatusCode,
-            RoleType.Realm => (await userRequests.AssignRealmRoleAsync(realmHandler.GetRealm(), userId, role,
+            RoleType.Realm => (await userRequests.AssignRealmRoleAsync(realmHandler.GetRealm(), keycloakUserId, role,
                 cancellationToken)).IsSuccessStatusCode,
             _ => throw new InvalidOperationException("Tipo de role não suportado.")
         };
@@ -37,6 +37,14 @@ public class UserService(
         => (await userRequests.GetByUsernameAsync(realmHandler.GetRealm(), username, cancellationToken))
             .FirstOrDefault();
 
-    public async Task DeleteUserAsync(string userId, CancellationToken cancellationToken)
-        => await userRequests.DeleteUserAsync(realmHandler.GetRealm(), userId, cancellationToken);
+    public async Task<bool> UpdateUserAsync(string username, UserRepresentation user, CancellationToken cancellationToken)
+    {
+        var keycloakUser = await GetByUsernameAsync(username, cancellationToken)
+            ?? throw new NotFoundException($"Usuário {username} não encontrado.");
+        
+        return (await userRequests.UpdateUserAsync(realmHandler.GetRealm(), keycloakUser.Id!, user, cancellationToken)).IsSuccessStatusCode;
+    }
+
+    public async Task DeleteUserAsync(string keycloakUserId, CancellationToken cancellationToken)
+        => await userRequests.DeleteUserAsync(realmHandler.GetRealm(), keycloakUserId, cancellationToken);
 }
