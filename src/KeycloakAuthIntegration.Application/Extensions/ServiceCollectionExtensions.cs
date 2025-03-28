@@ -1,8 +1,11 @@
 ﻿using FluentValidation;
 using KeycloakAuthIntegration.Application.CustomValidators;
+using KeycloakAuthIntegration.Application.Services;
 using KeycloakAuthIntegration.Domain.Interfaces;
+using KeycloakAuthIntegration.Domain.Interfaces.Services;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Client;
 
 namespace KeycloakAuthIntegration.Application.Extensions;
 
@@ -22,6 +25,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationLayer).Assembly));
         services.AddScoped<IPasswordHasher, CustomPasswordHasher>();
+        services.AddScoped<IUserSyncService, UserSyncService>();
         
         return services;
     }
@@ -31,6 +35,8 @@ public static class ServiceCollectionExtensions
         services.AddMapster();
 
         TypeAdapterConfig.GlobalSettings.Scan(AppDomain.CurrentDomain.GetAssemblies());
+        TypeAdapterConfig.GlobalSettings.AllowImplicitSourceInheritance = true;
+        TypeAdapterConfig.GlobalSettings.AllowImplicitDestinationInheritance = true;
 
         return services;
     }

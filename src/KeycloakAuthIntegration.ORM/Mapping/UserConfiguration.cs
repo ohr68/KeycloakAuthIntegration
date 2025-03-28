@@ -9,9 +9,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("Users");
-        
+
         builder.HasKey(u => u.Id);
-        
+
         builder.Property(u => u.Id)
             .HasColumnType("uniqueidentifier")
             .ValueGeneratedOnAdd()
@@ -20,11 +20,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Username)
             .HasColumnType("varchar(100)")
             .IsRequired();
-        
+
         builder.Property(u => u.Email)
             .HasColumnType("varchar(150)")
             .IsRequired();
-        
+
         builder.Property(u => u.FirstName)
             .HasColumnType("varchar(100)")
             .IsRequired();
@@ -32,11 +32,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.LastName)
             .HasColumnType("varchar(100)")
             .IsRequired();
-        
+
         builder.Property(u => u.Password)
             .HasColumnType("varchar(max)")
             .IsRequired();
-        
+
         builder.Property(u => u.CreatedAt)
             .HasColumnType("datetime2(7)")
             .HasDefaultValueSql("GETUTCDATE()")
@@ -44,5 +44,19 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.UpdatedAt)
             .HasColumnType("datetime2(7)");
+
+        builder.Property(u => u.LoginAllowed)
+            .HasColumnType("bit")
+            .IsRequired();
+
+        builder.Property(u => u.Status)
+            .HasColumnType("int")
+            .IsRequired();
+        
+        builder.HasIndex(u => u.Username)
+            .IsUnique();
+
+        builder.HasIndex(u => u.Email)
+            .IsUnique();
     }
 }

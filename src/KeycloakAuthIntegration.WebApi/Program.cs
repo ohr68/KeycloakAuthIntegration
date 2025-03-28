@@ -2,6 +2,7 @@ using KeycloakAuthIntegration.IoC;
 using KeycloakAuthIntegration.IoC.HealthChecks;
 using KeycloakAuthIntegration.IoC.Logging;
 using KeycloakAuthIntegration.ORM.Context;
+using KeycloakAuthIntegration.ORM.Initializers;
 using KeycloakAuthIntegration.WebApi.Constants;
 using KeycloakAuthIntegration.WebApi.Filters;
 using Serilog;
@@ -25,7 +26,8 @@ public class Program
                     ctx.ProblemDetails.Extensions.Add("instance",
                         $"{ctx.HttpContext.Request.Method} {ctx.HttpContext.Request.Path}");
                 });
-
+            
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddControllers(options => { options.Filters.Add<GlobalExceptionFilter>(); });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -50,11 +52,13 @@ public class Program
             app.MapControllers().RequireAuthorization();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseDefaultLogging();
 
             // When the app runs, it first creates the Database.
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
             context.Database.EnsureCreated();
+            DbInitializer.SeedDatabase(context);
 
             app.Run();
         }

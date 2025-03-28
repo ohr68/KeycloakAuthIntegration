@@ -1,4 +1,5 @@
-﻿using KeycloakAuthIntegration.Domain.Entities;
+﻿using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
+using KeycloakAuthIntegration.Domain.Entities;
 using Mapster;
 
 namespace KeycloakAuthIntegration.Application.CQRS.Users.CreateUser;
@@ -9,5 +10,6 @@ public class CreateUserProfile : IRegister
     {
         config.NewConfig<CreateUserCommand, User>();
         config.NewConfig<User, CreateUserResult>();
+        config.NewConfig<User, UserCreated>();
     }
 }

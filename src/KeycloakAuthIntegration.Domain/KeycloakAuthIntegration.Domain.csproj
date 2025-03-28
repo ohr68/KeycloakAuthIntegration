@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Messaging\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\KeycloakAuthIntegration.Common.Messaging\KeycloakAuthIntegration.Common.Messaging.csproj" />
+    </ItemGroup>
+
 </Project>

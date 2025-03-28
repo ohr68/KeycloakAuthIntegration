@@ -17,7 +17,7 @@ public class UserRepresentation
     [JsonPropertyName("emailVerified")]
     public bool EmailVerified { get; set; }
     [JsonPropertyName("attributes")]
-    public string[]? Attributes { get; set; }
+    public Dictionary<string, List<string>>? Attributes { get; set; }
     [JsonPropertyName("userProfileMetadata")]
     public UserProfileMetadata? UserProfileMetadata { get; set; }
     [JsonPropertyName("self")]
@@ -45,17 +45,17 @@ public class UserRepresentation
     [JsonPropertyName("realmRoles")]
     public string[]? RealmRoles { get; set; }
     [JsonPropertyName("clientRoles")]
-    public string[]? ClientRoles { get; set; }
+    public Dictionary<string, List<string>>? ClientRoles { get; set; }
     [JsonPropertyName("clientConsents")]
     public UserConsentRepresentation[]? ClientConsents { get; set; }
     [JsonPropertyName("notBefore")]
     public int NotBefore { get; set; }
     [JsonPropertyName("applicationRoles")]
-    public string[]? ApplicationRoles { get; set; }
+    public Dictionary<string, List<string>>? ApplicationRoles { get; set; }
     [JsonPropertyName("socialLinks")]
     public SocialLinkRepresentation[]? SocialLinks { get; set; }
     [JsonPropertyName("groups")]
     public string[]? Groups { get; set; }
     [JsonPropertyName("access")]
-    public bool Access { get; set; }
+    public Dictionary<string, bool>? Access { get; set; }
 }

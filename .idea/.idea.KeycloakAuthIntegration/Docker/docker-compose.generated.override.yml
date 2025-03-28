@@ -1,5 +1,24 @@
 # This is a generated file. Not intended for manual editing.
 services:
+  keycloak.auth.integration.consumers:
+    build:
+      context: "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration"
+      dockerfile: "Messaging/KeycloakAuthIntegration.Consumers/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/KeycloakAuthIntegration.Consumers.dll"
+    environment:
+      DOTNET_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "keycloak.authintegration.consumers:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\Messaging\\KeycloakAuthIntegration.Consumers:/app:rw"
+    - "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration:/src:rw"
+    - "C:\\Users\\Otavio\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
   web.api:
     build:
       context: "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration"
@@ -11,7 +30,7 @@ services:
     - "/app/bin/Debug/net8.0/KeycloakAuthIntegration.WebApi.dll"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-    image: "webapi:dev"
+    image: "keycloak.authintegration.webapi:dev"
     ports: []
     volumes:
     - "C:\\Users\\Otavio\\RiderProjects\\KeycloakAuthIntegration\\src\\KeycloakAuthIntegration.WebApi:/app:rw"

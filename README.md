@@ -21,6 +21,16 @@
 - Address: https://localhost:5001/swagger/
 - Description: This link provides access to swagger doc where it's possible to test the api and see how each method works.
 
+## Keycloak 
+- Address: http://localhost:7080/
+- Description:  This link provides access to keycloak interface.
+
+See [Keycloak Config](/.doc/keycloak-config.md)
+
 ## RabbitMq
 - Address: http://localhost:15672/
 - Description: This link provides access to the RabbitMq interface where it's possible to watch all the queues.
+
+## Redis 
+- Address: localhost:6379 or 127.0.0.1:6379
+- Description: This link provides access to Redis database to check the cached keys.

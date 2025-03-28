@@ -9,9 +9,9 @@ public interface IAuthRequests : IRequest
 {
     [Headers("Content-Type: application/x-www-form-urlencoded")]
     [Post("/realms/{realm}/protocol/openid-connect/token")]
-    Task<AuthResponse> LoginAsync(string realm, [Body(BodySerializationMethod.UrlEncoded)] AuthRequest request);
+    Task<AuthResponse> LoginAsync(string realm, [Body(BodySerializationMethod.UrlEncoded)] AuthRequest request, CancellationToken cancellationToken);
 
     [Headers("Content-Type: application/x-www-form-urlencoded")]
     [Post("/realms/{realm}/protocol/openid-connect/token")]
-    Task<AuthResponse> RefreshTokenAsync(string realm, [Body(BodySerializationMethod.UrlEncoded)] RefreshTokenRequest request);
+    Task<RefreshTokenResponse> RefreshTokenAsync(string realm, [Body(BodySerializationMethod.UrlEncoded)] RefreshTokenRequest request, CancellationToken cancellationToken);
 }
