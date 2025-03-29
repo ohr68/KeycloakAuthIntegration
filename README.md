@@ -26,7 +26,8 @@
 - Description:  This link provides access to keycloak interface.
 
 See [Keycloak Config](/.doc/keycloak-config.md)
-Postman Collection containing all of the requests used in this project is also available here [Postman Collection](./doc/Keycloak.postman_collection.json)
+
+Postman Collection containing all of the requests used in this project is also available here [Postman Collection](./doc)
 
 ## RabbitMq
 - Address: http://localhost:15672/
