@@ -3,6 +3,7 @@ using KeycloakAuthIntegration.Common.Messaging.Enums;
 using KeycloakAuthIntegration.Keycloak.Constants;
 using KeycloakAuthIntegration.Keycloak.Models;
 using KeycloakAuthIntegration.Keycloak.Models.Dtos;
+using KeycloakAuthIntegration.Keycloak.Saga.CreateUser;
 using KeycloakAuthIntegration.Messaging.Domain.Entities;
 using Mapster;
 
@@ -14,8 +15,8 @@ public class UserCreatedProfile : IRegister
     {
         config.NewConfig<Common.Messaging.Commands.Users.UserCreated, UserCreatedCommand>();
         config.NewConfig<UserCreatedCommand, UserSync>();
-        config.NewConfig<UserCreatedCommand, CreateUserFlowDto>()
-            .ConstructUsing(u => new CreateUserFlowDto(u.Id, new UserRepresentation
+        config.NewConfig<UserCreatedCommand, CreateUserSagaRequest>()
+            .ConstructUsing(u => new CreateUserSagaRequest(new CreateUserFlowDto(u.Id, new UserRepresentation
             {
                 Username = u.Username,
                 FirstName = u.FirstName,
@@ -36,7 +37,7 @@ public class UserCreatedProfile : IRegister
                         Temporary = false
                     }
                 }
-            }));
+            })));
 
         config.NewConfig<UserSync, UserCreatedResult>();
         config.NewConfig<UserCreatedResult, UserSynchronized>()

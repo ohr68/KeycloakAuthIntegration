@@ -1,8 +1,5 @@
-﻿using System.Text.Json;
-using FluentValidation;
-using KeycloakAuthIntegration.Keycloak.Interfaces.Services;
-using KeycloakAuthIntegration.Keycloak.Models.Dtos;
-using KeycloakAuthIntegration.Keycloak.Saga.Interfaces.CreateUser;
+﻿using FluentValidation;
+using KeycloakAuthIntegration.Keycloak.Saga.CreateUser;
 using KeycloakAuthIntegration.Messaging.Domain.Entities;
 using KeycloakAuthIntegration.Messaging.ORM.Context;
 using KeycloakIntegration.Common.Exceptions;
@@ -13,8 +10,8 @@ using Microsoft.EntityFrameworkCore;
 namespace KeycloakAuthIntegration.Messaging.Application.Users.UserCreated;
 
 public class UserCreatedCommandHandler(
+    IMediator mediator,
     MessagingDbContext context,
-    ICreateUserHandler createUserHandler,
     IValidator<UserCreatedCommand> validator
 ) : IRequestHandler<UserCreatedCommand, UserCreatedResult>
 {
@@ -33,9 +30,9 @@ public class UserCreatedCommandHandler(
         if (!saveResult)
             throw new BadRequestException("Houve uma falha ao inserir o usuário. Tente novamente.");
 
-        var userRepresentation = request.Adapt<CreateUserFlowDto>();
+        var createUserSagaRequest = request.Adapt<CreateUserSagaRequest>();
 
-        await createUserHandler.Handle(userRepresentation, cancellationToken);
+        await mediator.Send(createUserSagaRequest, cancellationToken);
 
         userSync.Synchronized();
         context.Entry(userSync).State = EntityState.Modified;

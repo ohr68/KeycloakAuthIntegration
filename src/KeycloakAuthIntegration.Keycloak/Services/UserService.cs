@@ -9,10 +9,10 @@ namespace KeycloakAuthIntegration.Keycloak.Services;
 public class UserService(
     IRealmHandler realmHandler,
     IKeycloakClientHandler keycloakClientHandler,
-    IUserRequests userRequests) : IUserService
+    IUserKeycloakRequests userKeycloakRequests) : IUserService
 {
     public async Task<bool> CreateUserAsync(UserRepresentation user, CancellationToken cancellationToken)
-        => (await userRequests.CreateUserAsync(realmHandler.GetRealm(), user, cancellationToken)).IsSuccessStatusCode;
+        => (await userKeycloakRequests.CreateUserAsync(realmHandler.GetRealm(), user, cancellationToken)).IsSuccessStatusCode;
 
     public async Task<bool> AssignRoleAsync(string keycloakUserId, IEnumerable<RoleRepresentation> role,
         RoleType roleType,
@@ -20,9 +20,9 @@ public class UserService(
     {
         var success = roleType switch
         {
-            RoleType.Client => (await userRequests.AssignClientRoleAsync(realmHandler.GetRealm(), keycloakUserId,
+            RoleType.Client => (await userKeycloakRequests.AssignClientRoleAsync(realmHandler.GetRealm(), keycloakUserId,
                 keycloakClientHandler.GetClientUuid(), role, cancellationToken)).IsSuccessStatusCode,
-            RoleType.Realm => (await userRequests.AssignRealmRoleAsync(realmHandler.GetRealm(), keycloakUserId, role,
+            RoleType.Realm => (await userKeycloakRequests.AssignRealmRoleAsync(realmHandler.GetRealm(), keycloakUserId, role,
                 cancellationToken)).IsSuccessStatusCode,
             _ => throw new InvalidOperationException("Tipo de role não suportado.")
         };
@@ -34,7 +34,7 @@ public class UserService(
     }
 
     public async Task<UserRepresentation?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
-        => (await userRequests.GetByUsernameAsync(realmHandler.GetRealm(), username, cancellationToken))
+        => (await userKeycloakRequests.GetByUsernameAsync(realmHandler.GetRealm(), username, cancellationToken))
             .FirstOrDefault();
 
     public async Task<bool> UpdateUserAsync(string username, UserRepresentation user, CancellationToken cancellationToken)
@@ -42,9 +42,9 @@ public class UserService(
         var keycloakUser = await GetByUsernameAsync(username, cancellationToken)
             ?? throw new NotFoundException($"Usuário {username} não encontrado.");
         
-        return (await userRequests.UpdateUserAsync(realmHandler.GetRealm(), keycloakUser.Id!, user, cancellationToken)).IsSuccessStatusCode;
+        return (await userKeycloakRequests.UpdateUserAsync(realmHandler.GetRealm(), keycloakUser.Id!, user, cancellationToken)).IsSuccessStatusCode;
     }
 
     public async Task DeleteUserAsync(string keycloakUserId, CancellationToken cancellationToken)
-        => await userRequests.DeleteUserAsync(realmHandler.GetRealm(), keycloakUserId, cancellationToken);
+        => await userKeycloakRequests.DeleteUserAsync(realmHandler.GetRealm(), keycloakUserId, cancellationToken);
 }

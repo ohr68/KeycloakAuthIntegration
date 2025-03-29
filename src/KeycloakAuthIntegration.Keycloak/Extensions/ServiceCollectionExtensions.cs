@@ -5,13 +5,10 @@ using KeycloakAuthIntegration.Keycloak.Interfaces;
 using KeycloakAuthIntegration.Keycloak.Interfaces.Services;
 using KeycloakAuthIntegration.Keycloak.RequestHandlers;
 using KeycloakAuthIntegration.Keycloak.Requests;
-using KeycloakAuthIntegration.Keycloak.Saga.CreateUser;
-using KeycloakAuthIntegration.Keycloak.Saga.Interfaces.CreateUser;
 using KeycloakAuthIntegration.Keycloak.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using Polly.Timeout;
 using Refit;
 
 namespace KeycloakAuthIntegration.Keycloak.Extensions;
@@ -54,7 +51,7 @@ public static class ServiceCollectionExtensions
         var baseUrl = configuration.GetSection("Keycloak:auth-server-url").Value
                       ?? throw new InvalidOperationException("Chave 'Keycloak:auth-server-url' não encontrada.");
 
-        var baseInterface = typeof(IRequest);
+        var baseInterface = typeof(IKeycloakRequest);
 
         var refitInterfaces = Assembly.GetAssembly(typeof(KeycloakLayer))!
             .GetTypes()
@@ -68,7 +65,7 @@ public static class ServiceCollectionExtensions
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(baseUrl))
                 .AddHttpMessageHandler<CustomRequestHandler>();
 
-            _ = refitInterface == typeof(IAuthRequests)
+            _ = refitInterface == typeof(IAuthKeycloakRequests)
                 ? refitClient
                 : isApi
                     ? refitClient.AddHttpMessageHandler<AuthHeaderHandler>()
@@ -96,8 +93,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRealmRoleService, RealmRoleService>();
         services.AddScoped<IRealmHandler, RealmHandler>();
         services.AddScoped<IKeycloakClientHandler, KeycloakClientHandler>();
-        services.AddScoped<ICreateUserHandler, CreateUserHandler>();
-        services.AddScoped<ICreateUserSaga, CreateUserSaga>();
         services.AddScoped<IJwtService, JwtService>();
 
         return services;

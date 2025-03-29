@@ -7,11 +7,11 @@ using MediatR;
 
 namespace KeycloakAuthIntegration.Consumers.Consumers;
 
-public class UserUpdatedConsumer(IMediator mediator, IQueueService queueService) : IConsumer<UserUpdated>
+public class UserUpdatedConsumer(IMediator mediator, IQueueService queueService, ILogger<UserUpdatedConsumer> logger) : IConsumer<UserUpdated>
 {
     public async Task Consume(ConsumeContext<UserUpdated> context)
     {
-        Console.WriteLine("Starting UserCreatedConsumer for {0}", context.Message.CorrelationId);
+        logger.LogInformation("Starting UserCreatedConsumer for {UserId}", context.Message.Id);
 
         var message = context.Message;
 
@@ -19,8 +19,8 @@ public class UserUpdatedConsumer(IMediator mediator, IQueueService queueService)
 
         _ = await mediator.Send(userCreatedCommand, context.CancellationToken);
 
-        Console.WriteLine("Sending UserSynchronized to queue.");
+        logger.LogInformation("Sending UserSynchronized to queue.");
         await queueService.Publish(message.Adapt<UserSynchronized>(), context.CancellationToken);
-        Console.WriteLine("UserSynchronized sent to queue.");
+        logger.LogInformation("UserSynchronized sent to queue.");
     }
 }

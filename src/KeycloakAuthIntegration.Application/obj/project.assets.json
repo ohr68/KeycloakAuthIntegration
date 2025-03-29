@@ -1936,6 +1936,7 @@
         "dependencies": {
           "KeycloakAuthIntegration.Caching": "1.0.0",
           "KeycloakIntegration.Common": "1.0.0",
+          "MediatR": "12.4.1",
           "Microsoft.AspNetCore.Http": "2.3.0",
           "Microsoft.Extensions.Caching.Abstractions": "9.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "9.0.0",

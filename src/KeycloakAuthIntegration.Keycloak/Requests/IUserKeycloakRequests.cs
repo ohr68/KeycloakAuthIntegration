@@ -4,7 +4,7 @@ using Refit;
 
 namespace KeycloakAuthIntegration.Keycloak.Requests;
 
-public interface IUserRequests : IRequest
+public interface IUserKeycloakRequests : IKeycloakRequest
 {
     [Headers("Content-Type: application/json")]
     [Post("/admin/realms/{realm}/users")]

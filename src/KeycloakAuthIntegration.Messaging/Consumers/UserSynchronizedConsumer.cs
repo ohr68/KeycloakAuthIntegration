@@ -1,21 +1,20 @@
-﻿using System.Text.Json;
-using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
+﻿using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
 using KeycloakAuthIntegration.Domain.Interfaces.Services;
 using MassTransit;
+using Microsoft.Extensions.Logging;
 
 namespace KeycloakAuthIntegration.Messaging.Consumers;
 
-public class UserSynchronizedConsumer(IUserSyncService userSyncService) : IConsumer<UserSynchronized>
+public class UserSynchronizedConsumer(IUserSyncService userSyncService, ILogger<UserSynchronizedConsumer> logger) : IConsumer<UserSynchronized>
 {
     public async Task Consume(ConsumeContext<UserSynchronized> context)
     {
-        Console.WriteLine("Starting UserSynchronizedConsumer for {0}", context.Message.CorrelationId);
+        logger.LogInformation("Starting UserSynchronizedConsumer for {UserId}", context.Message.Id);
         
         var message = context.Message;
-        Console.WriteLine(JsonSerializer.Serialize(message));
         
         var result = await userSyncService.SynchronizeUser(message, context.CancellationToken);
         
-        Console.WriteLine("User {0} {1}.", message.Id, result ? "synchronized successfully" : "failed to synchronize");
+        logger.LogInformation("User {messageId} {result}.", message.Id, result ? "synchronized successfully" : "failed to synchronize");
     }
 }

@@ -5,8 +5,8 @@ using KeycloakAuthIntegration.Keycloak.Requests;
 
 namespace KeycloakAuthIntegration.Keycloak.Services;
 
-public class RealmRoleService(IRealmHandler realmHandler, IRealmRoleRequests realmRoleRequests) : IRealmRoleService
+public class RealmRoleService(IRealmHandler realmHandler, IRealmRoleKeycloakRequests realmRoleKeycloakRequests) : IRealmRoleService
 {
     public async Task<RoleRepresentation?> GetRoleByNameAsync(string? roleName, CancellationToken cancellationToken)
-       => await realmRoleRequests.GetRoleByNameAsync(realmHandler.GetRealm(), roleName ?? RealmRoles.Admin, cancellationToken);
+       => await realmRoleKeycloakRequests.GetRoleByNameAsync(realmHandler.GetRealm(), roleName ?? RealmRoles.Admin, cancellationToken);
 }

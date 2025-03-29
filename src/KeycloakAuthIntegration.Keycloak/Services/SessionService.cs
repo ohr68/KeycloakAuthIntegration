@@ -8,8 +8,8 @@ namespace KeycloakAuthIntegration.Keycloak.Services;
 
 public class SessionService(
     IRealmHandler realmHandler,
-    ISessionRequests sessionRequests) : ISessionService
+    ISessionKeycloakRequests sessionKeycloakRequests) : ISessionService
 {
     public async Task<bool> LogoutAsync(string userId, CancellationToken cancellationToken)
-        => (await sessionRequests.LogoutAsync(realmHandler.GetRealm(), userId, cancellationToken)).IsSuccessStatusCode;
+        => (await sessionKeycloakRequests.LogoutAsync(realmHandler.GetRealm(), userId, cancellationToken)).IsSuccessStatusCode;
 }

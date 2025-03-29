@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using KeycloakAuthIntegration.Keycloak;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +19,9 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationLayer).Assembly));
+        services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssemblies(new[]
+                { typeof(ApplicationLayer).Assembly, typeof(KeycloakLayer).Assembly }));
 
         return services;
     }

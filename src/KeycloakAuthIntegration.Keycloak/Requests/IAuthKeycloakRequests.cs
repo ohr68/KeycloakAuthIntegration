@@ -5,7 +5,7 @@ using Refit;
 
 namespace KeycloakAuthIntegration.Keycloak.Requests;
 
-public interface IAuthRequests : IRequest
+public interface IAuthKeycloakRequests : IKeycloakRequest
 {
     [Headers("Content-Type: application/x-www-form-urlencoded")]
     [Post("/realms/{realm}/protocol/openid-connect/token")]

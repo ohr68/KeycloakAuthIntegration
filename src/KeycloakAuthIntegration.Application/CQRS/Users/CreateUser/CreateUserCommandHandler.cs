@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using FluentValidation;
+﻿using FluentValidation;
 using KeycloakAuthIntegration.Common.Messaging.Commands.Users;
 using KeycloakAuthIntegration.Common.Messaging.Interfaces;
 using KeycloakAuthIntegration.Domain.Entities;
@@ -8,7 +7,7 @@ using KeycloakAuthIntegration.ORM.Context;
 using KeycloakIntegration.Common.Exceptions;
 using Mapster;
 using MediatR;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace KeycloakAuthIntegration.Application.CQRS.Users.CreateUser;
 
@@ -16,7 +15,8 @@ public class CreateUserCommandHandler(
     AuthDbContext context,
     IQueueService queueService,
     IPasswordHasher passwordHasher,
-    IValidator<CreateUserCommand> createUserValidator) : IRequestHandler<CreateUserCommand, CreateUserResult>
+    IValidator<CreateUserCommand> createUserValidator,
+    ILogger<CreateUserCommandHandler> logger) : IRequestHandler<CreateUserCommand, CreateUserResult>
 {
     public async Task<CreateUserResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
@@ -35,12 +35,12 @@ public class CreateUserCommandHandler(
         if (!saveResult)
             throw new BadRequestException("Houve uma falha ao inserir o usuário. Tente novamente.");
 
-        Console.WriteLine("Enviando usuário cadastrado para fila.");
+        logger.LogInformation("Sending created user to queue.");
         var userCreatedEvent = user.Adapt<UserCreated>();
         userCreatedEvent.Password = request.Password;
-        
+
         await queueService.Publish(userCreatedEvent, cancellationToken);
-        Console.WriteLine("Usuário enviado para fila com sucesso.");
+        logger.LogInformation("User sent to queue successfully.");
 
         return user.Adapt<CreateUserResult>();
     }
