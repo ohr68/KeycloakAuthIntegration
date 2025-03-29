@@ -34,3 +34,4 @@ See [Keycloak Config](/.doc/keycloak-config.md)
 ## Redis 
 - Address: localhost:6379 or 127.0.0.1:6379
 - Description: This link provides access to Redis database to check the cached keys.
+- Tip: Use Redis Insight to see the cached keys via user interface. Just paste the ip when asked to do so.
